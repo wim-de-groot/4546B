@@ -1,0 +1,3 @@
+resources:
+  - trust-anchor.yaml
+  - trust-issuer.yaml

@@ -1,0 +1,87 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: bootstrap
+spec:
+  generators:
+    - matrix:
+        generators:
+          - list:
+              elements:
+                - repoURL: https://github.com/wim-de-groot/4546B.git
+                  revision: HEAD
+                  repoPath: apps/*/*
+          - git:
+              repoURL: '{{ repoURL }}'
+              revision: '{{ revision }}'
+              directories:
+                - path: '{{ repoPath }}'
+  syncPolicy:
+    preserveResourcesOnDeletion: true
+  template:
+    metadata:
+      name: '{{ path[1] }}-{{ path.basenameNormalized }}'
+      namespace: argocd
+    spec:
+      project: default
+      source:
+        repoURL: '{{ repoURL }}'
+        targetRevision: '{{ revision }}'
+        path: '{{ path }}'
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{ path[1] }}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true
+          - RespectIgnoreDifferences=true
+          - SkipDryRunOnMissingResource=true
+        retry:
+          limit: -1 # Infinite retries
+          backoff:
+            duration: 30s
+            factor: 2
+            maxDuration: 5m
+      ignoreDifferences:
+        - group: ""
+          kind: Secret
+          name:  linkerd-proxy-injector-k8s-tls
+          jsonPointers:
+            - /data/tls.crt
+            - /data/tls.key
+        - group: ""
+          kind: Secret
+          name:  linkerd-sp-validator-k8s-tls
+          jsonPointers:
+            - /data/tls.crt
+            - /data/tls.key
+        - group: ""
+          kind: Secret
+          name:  linkerd-policy-validator-k8s-tls
+          jsonPointers:
+            - /data/tls.crt
+            - /data/tls.key
+        - group: admissionregistration.k8s.io/v1
+          kind: MutatingWebhookConfiguration
+          name:  linkerd-proxy-injector-webhook-config
+          jsonPointers:
+            - /webhooks/0/clientConfig/caBundle
+        - group: admissionregistration.k8s.io/v1
+          kind: ValidatingWebhookConfiguration
+          name:  linkerd-sp-validator-webhook-config
+          jsonPointers:
+            - /webhooks/0/clientConfig/caBundle
+        - group: admissionregistration.k8s.io/v1
+          kind: ValidatingWebhookConfiguration
+          name:  linkerd-policy-validator-webhook-config
+          jsonPointers:
+            - /webhooks/0/clientConfig/caBundle
+        - group: apiextensions.k8s.io
+          kind: CustomResourceDefinition
+          jsonPointers:
+            - /status
+

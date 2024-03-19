@@ -1,0 +1,7 @@
+apiVersion: v2
+name: connector
+version: 0.1.24
+dependencies:
+  - name: connector
+    version: 0.1.24
+    repository: https://twingate.github.io/helm-charts

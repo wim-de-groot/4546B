@@ -1,0 +1,4 @@
+connector:
+  connector:
+    network: aglowamyloid0m
+    existingSecret: twingate

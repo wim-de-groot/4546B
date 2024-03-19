@@ -1,0 +1,26 @@
+kind: Cluster
+name: 4546B 
+talos:
+  version: v1.6.7
+kubernetes:
+  version: 1.29.3
+features:
+  enableWorkloadProxy: false 
+---
+kind: ControlPlane
+machineClass:
+  name: controlplane
+  size: 3
+patches:
+  - name: scheduling
+    file: infra/patches/scheduling.yaml
+  - name: argocd
+    file: infra/patches/argocd.yaml
+  - name: monitoring
+    file: infra/patches/monitoring.yaml
+---
+kind: Workers
+name: workers
+machineClass:
+  name: worker
+  size: unlimited
