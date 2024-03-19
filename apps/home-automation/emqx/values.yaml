@@ -1,0 +1,29 @@
+emqx:
+  ingress:
+    dashboard:
+      enabled: true
+      hosts:
+        - emqx.united
+      tls:
+        - hosts:
+            - emqx.united
+          secretName: emqx.united-tls
+      annotations:
+        cert-manager.io/cluster-issuer: 4546b
+        traefik.ingress.kubernetes.io/router.entrypoints: websecure 
+  ssl:
+    enabled: true
+    useExisting: false 
+    commonName: mqtt.united
+    dnsnames: 
+      - mqtt.united 
+    issuer:
+      name: 4546b
+      kind: ClusterIssuer
+  emqxConfig:
+    EMQX_LISTENERS__SSL__DEFAULT__SSL_OPTIONS__CERTFILE: /tmp/ssl/tls.crt
+    EMQX_LISTENERS__SSL__DEFAULT__SSL_OPTIONS__KEYFILE: /tmp/ssl/tls.key
+    EMQX_CLUSTER__DISCOVERY_STRATEGY: "dns"
+    EMQX_DASHBOARD__DEFAULT_USERNAME: "admin"
+    EMQX_DASHBOARD__DEFAULT_PASSWORD: "public"
+

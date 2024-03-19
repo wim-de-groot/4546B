@@ -1,0 +1,23 @@
+apiVersion: v1	
+kind: ConfigMap	
+metadata:	
+  name: mealie	
+  namespace: home-automation	
+  labels:	
+    app.kubernetes.io/name: mealie	
+data:	
+  BASE_URL: 'https://mealie.united:443'	
+  #  OIDC_AUTH_ENABLED: 'true'
+  #  OIDC_AUTO_REDIRECT: 'true'
+  #  OIDC_PROVIDER_NAME: 'SSO'
+  #  OIDC_CONFIGURATION_URL: 'https://keycloak.united/realms/4546b/.well-known/openid-configuration'
+  #  OIDC_USER_GROUP: read
+  #  OIDC_ADMIN_GROUP: admin
+  #  OIDC_TLS_CACERTFILE: /etc/ssl/certs/trust-bundle.pem
+  DEFAULT_GROUP: Home	
+  MAX_WORKERS: '1'	
+  PGID: '1000'	
+  PUID: '1000'	
+  TZ: Europe/Amsterdam	
+  WEB_CONCURRENCY: '1'
+  LOG_LEVEL: debug

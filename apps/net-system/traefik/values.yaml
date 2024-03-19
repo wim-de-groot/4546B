@@ -1,0 +1,15 @@
+traefik:
+  providers:
+    kubernetesIngress:
+      publishedService:
+        allowExternalNameServices: true
+        enabled: true
+
+  logs:
+    general:
+      format: json
+      level: INFO
+
+  service:
+    spec:
+      loadBalancerIP: 10.0.0.240

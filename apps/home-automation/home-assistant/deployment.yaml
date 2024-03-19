@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: home-assistant
+spec:
+  replicas: 1
+  template:
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 26
+        runAsGroup: 1000
+        fsGroup: 1000
+      containers:
+        - name: home-assistant
+          image: homeassistant/home-assistant:2024.11
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: TZ
+              value: "Europe/Amsterdam"
+          ports:
+            - containerPort: 8123
+              name: web
+            - containerPort: 21063
+              name: homekit-tcp
+            - containerPort: 5353
+              name: homekit-udp
+          volumeMounts:
+            - mountPath: /config
+              name: home-assistant-data
+            - mountPath: /config/configuration.yaml
+              subPath: configuration.yaml
+              name: home-assistant-config
+            - mountPath: /etc/ssl/certs/trust-bundle.pem
+              name: trustbundle
+              subPath: trust-bundle.pem
+          securityContext:
+            privileged: false
+      restartPolicy: Always
+      volumes:
+        - name: trustbundle
+          configMap:
+            name: 4546b
+            defaultMode: 420
+        - name: home-assistant-data
+          persistentVolumeClaim:
+            claimName: pvc-home-assistant-config
+        - name: home-assistant-config
+          configMap:
+            name: home-assistant-config
+            items:
+              - key: configuration.yaml
+                path: configuration.yaml

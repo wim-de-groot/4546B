@@ -1,0 +1,106 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mealie
+  labels:	
+    app.kubernetes.io/name: mealie	
+spec:
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 10
+  replicas: 1
+  revisionHistoryLimit: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: mealie	
+  template:
+    metadata:
+      name: mealie
+      labels:	
+        app.kubernetes.io/name: mealie	
+    spec:
+      containers:
+        - name: mealie
+          image: ghcr.io/mealie-recipes/mealie:v2.5.0 
+          env:
+            - name: DB_ENGINE 
+              value: postgres
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mealie-app
+                  key: user
+            - name: POSTGRES_PASSWORD 
+              valueFrom:
+                secretKeyRef:
+                  name: mealie-app
+                  key: pgpass
+            - name: POSTGRES_SERVER 
+              value: mealie-rw.home-automation.svc.cluster.local
+            - name: POSTGRES_PORT 
+              value: "5432"
+            - name: POSTGRES_DB 
+              valueFrom:
+                secretKeyRef:
+                  name: mealie-app
+                  key: dbname
+                  #            - name: OIDC_CLIENT_ID 
+                  #              value: mealie 
+                  #            - name: OIDC_CLIENT_SECRET
+                  #              valueFrom:
+                  #                secretKeyRef:
+                  #                  name: mealie-oidc-credentials
+                  #                  key: password
+          envFrom:
+            - configMapRef:
+                name: mealie
+                optional: false
+          ports:
+            - containerPort: 9000
+              name: web
+          resources:
+            requests:
+              cpu: 100m
+              memory: 500Mi
+            limits:
+              cpu: 500m
+              memory: 1000Mi
+          volumeMounts:
+            - mountPath: /app/data
+              name: mealie-data
+            - mountPath: /etc/ssl/certs/trust-bundle.pem
+              name: trustbundle
+              subPath: trust-bundle.pem
+          imagePullPolicy: IfNotPresent
+          startupProbe:
+            httpGet:
+              path: / 
+              port: 9000 
+              scheme: HTTP
+            initialDelaySeconds: 60
+            failureThreshold: 30
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 9000
+              scheme: HTTP
+            initialDelaySeconds: 0
+            periodSeconds: 3
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 9000
+              scheme: HTTP
+            initialDelaySeconds: 0
+            periodSeconds: 3
+      restartPolicy: Always
+      volumes:
+        - name: mealie-data
+          emptyDir: {}
+        - name: trustbundle
+          configMap:
+            name: 4546b
+            defaultMode: 420
