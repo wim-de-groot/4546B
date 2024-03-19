@@ -1,0 +1,11 @@
+cert-manager:
+  installCRDs: true
+
+  namespace: infra-system
+
+trust-manager:
+  namespace: infra-system
+  
+  app:
+    trust:
+      namespace: infra-system

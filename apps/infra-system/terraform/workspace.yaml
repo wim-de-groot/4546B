@@ -1,0 +1,28 @@
+apiVersion: tf.upbound.io/v1beta1
+kind: Workspace
+metadata:
+  name: test 
+  namespace: infra-system
+  annotations:
+    crossplane.io/external-name: test 
+spec:
+  writeConnectionSecretToRef:
+    namespace: infra-system 
+    name: terraform-workspace-test
+  forProvider:
+    source: Inline
+    module: |
+      resource "random_pet" "realm_nickname" {}
+
+      resource "keycloak_realm" "realm" {
+        realm   = random_pet.realm_nickname.id 
+      }
+      
+      resource "keycloak_openid_client" "terraform_client" {
+        realm_id            = keycloak_realm.realm.id
+        client_id           = "mealie"
+        name                = "Mealie"
+        enabled             = true
+        access_type         = "CONFIDENTIAL"
+        login_theme         = "keycloak"
+      }

@@ -1,0 +1,36 @@
+apiVersion: tf.upbound.io/v1beta1
+kind: ProviderConfig
+metadata:
+  name: default
+  namespace: infra-system
+spec:
+  credentials:
+    - filename: password
+      secretRef:
+        key: password
+        name: keycloak-initial-admin-creds
+        namespace: infra-system
+      source: Secret
+  configuration: |
+    terraform {
+      backend "kubernetes" {
+        secret_suffix     = "providerconfig-default"
+        namespace         = "infra-system"
+        in_cluster_config = true
+      }
+
+      required_providers {
+        keycloak = {
+          source = "keycloak/keycloak"
+          version = "5.1.1"
+        }
+      }
+    }
+
+    provider "keycloak" {
+      client_id = "admin-cli"
+      username  = "user"
+      password  = file("${path.module}/password")
+      url       = "http://infra-system-keycloak.infra-system.svc.cluster.local"
+      client_timeout = 180
+    }
