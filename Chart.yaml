@@ -1,0 +1,9 @@
+# Ignore this Chart.yaml as part of helm. Its only used to generate a the root README.md
+apiVersion: v2
+name: 4546b
+version: 0.0.1
+description: This is project 4546b. Its a cluster configuration based using talos and omni to configure itself. 
+maintainers: 
+  - name: Wim de Groot
+    email: 34519486+wim-de-groot@users.noreply.github.com
+    url: https://github.com/wim-de-groot
