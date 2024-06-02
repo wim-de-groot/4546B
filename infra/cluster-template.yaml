@@ -1,11 +1,14 @@
 kind: Cluster
 name: 4546B 
 talos:
-  version: v1.6.7
+  version: v1.7.4
 kubernetes:
-  version: 1.29.3
+  version: 1.29.5
 features:
-  enableWorkloadProxy: false 
+  enableWorkloadProxy: false
+patches:
+  - name: kubespan
+    file: infra/patches/kubespan.yaml
 ---
 kind: ControlPlane
 machineClass:
