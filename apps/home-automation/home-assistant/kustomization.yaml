@@ -1,0 +1,21 @@
+namespace: home-automation
+
+resources:
+  - deployment.yaml
+  - service.yaml
+  - storage.yaml
+
+configMapGenerator:
+  - name: home-assistant-config
+    files:
+      - configuration.yaml
+    options:
+      disableNameSuffixHash: true
+
+labels:
+  - pairs:
+      app.kubernetes.io/name: home-assistant
+    includeSelectors: true
+  - pairs:
+      app.kubernetes.io/version: "2024.1"
+    includeSelectors: false

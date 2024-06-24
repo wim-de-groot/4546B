@@ -1,0 +1,25 @@
+# Loads default set of integrations. Do not remove.
+default_config:
+
+# Load frontend themes from the themes folder
+frontend:
+  themes: !include_dir_merge_named themes
+
+#automation: !include automations.yaml
+#script: !include scripts.yaml
+#scene: !include scenes.yaml
+
+homeassistant:
+  name: Naomi & Wim's Home
+  unit_system: metric
+  currency: EUR
+  country: NL
+  time_zone: "Europe/Amsterdam"
+  internal_url: "http://home-assistant.homelab.com:8123"
+
+http:
+  server_host: 0.0.0.0
+  server_port: 8123
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - 10.0.0.0/16
