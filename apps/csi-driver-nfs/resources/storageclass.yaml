@@ -6,7 +6,7 @@ metadata:
     storageclass.kubernetes.io/is-default-class: "true"
 provisioner: nfs.csi.k8s.io
 parameters:
-  server: 10.0.0.32 
+  server: 10.0.0.15 
   share: /mnt/forty-five-forty-six-b/cluster 
 reclaimPolicy: Retain
 volumeBindingMode: Immediate
