@@ -4,4 +4,10 @@ resources:
   - namespace.yaml
   - github.com/argoproj/argo-cd/manifests/cluster-install?ref=v2.9.3
   - bootstrap-app-set.yaml
+  - https://raw.githubusercontent.com/argoproj-labs/argocd-image-updater/stable/manifests/install.yaml
 
+patches:
+  - path: argocd-image-updater-secret.yaml
+  - path: argocd-cm.yaml
+  - path: argocd-image-updater-config.yaml
+  - path: argocd-rbac-cm.yaml

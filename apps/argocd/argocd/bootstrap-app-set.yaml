@@ -22,6 +22,8 @@ spec:
     metadata:
       name: '{{ path[1] }}-{{ path.basenameNormalized }}'
       namespace: argocd
+      annotations:
+        argocd-image-updater.argoproj.io/image-list: homeassistant/home-assistant
     spec:
       project: default
       source:
