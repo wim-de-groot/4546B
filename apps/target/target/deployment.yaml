@@ -1,0 +1,16 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: target
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+        - name: target 
+          image: nginx 
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80 
+              name: web
+      restartPolicy: Always
