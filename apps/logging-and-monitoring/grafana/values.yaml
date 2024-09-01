@@ -1,0 +1,91 @@
+grafana:
+  testFramework:
+    enabled: false
+  
+  ingres:
+    enabled: false
+  
+  grafana.ini:
+    server:
+      protocol: http
+      domain: grafana.homelab.com
+      root_url: "http://%(domain)s/"
+    auth.github:
+        enabled: true
+        auto_login: false
+        allow_sign_up: true
+        client_id: $__file{/etc/secrets/grafana-secret-files/github-client-id}
+        client_secret: $__file{/etc/secrets/grafana-secret-files/github-client-secret}
+        scopes: 'user:email,read:org'
+        auth_url: https://github.com/login/oauth/authorize
+        token_url: https://github.com/login/oauth/access_token
+        api_url: https://api.github.com/user
+        role_attribute_path: contains(groups[*], '@org/admin') && 'Admin' || contains(groups[*], '@org/backend') && 'Editor' || 'Viewer'
+        allow_assign_grafana_admin: false
+        role_attribute_strict: false
+        skip_org_role_sync: false
+        use_refresh_token: false
+
+  dashboardProviders:
+    dashboardproviders.yaml:
+      apiVersion: 1
+      providers:
+        - name: 'grafana-dashboards-kubernetes'
+          orgId: 1
+          folder: 'Kubernetes'
+          type: file
+          disableDeletion: true
+          edtiable: false
+          options:
+            path: /var/lib/grafana/dashboards/grafana-dashboards-kubernetes
+
+  dashboards:
+    grafana-dashboards-kubernetes:
+      k8s-systems-api-sever:
+        url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-system-api-server.json
+        token: ''
+      k8s-views-global:
+        url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-global.json
+        token: ''
+      k8s-views-namespaces:
+        url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-namespaces.json
+        token: ''
+      k8s-views-nodes:
+        url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-nodes.json
+        token: ''
+      k8s-views-pods:
+        url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-pods.json
+        token: ''
+
+  datasources:
+    datasources.yaml:
+      apiVersion: 1
+      datasources:
+        - name: Prometheus
+          type: prometheus
+          url: http://logging-and-monitoring-prometheus-server.logging-and-monitoring.svc.cluster.local
+          access: proxy
+          isDefault: true
+
+  extraSecretMounts:
+    - name: grafana-secrets
+      mountPath: /etc/secrets/grafana-secret-files
+      defaultMode: 0440
+      readOnly: true
+      secretName: grafana-secret-files
+  
+  extraObjects:
+    - apiVersion: bitnami.com/v1alpha1
+      kind: SealedSecret
+      metadata:
+        name: grafana-secret-files
+        namespace: logging-and-monitoring
+      spec:
+        encryptedData:
+          github-client-id: AgCOoRJ8QMPT2M5blNCNevgPHleFnvcU+wms0tm7Gxdntq37wZNbkk61gkTXqJGM81s10txaGWMI0qBWkoE1WDpOUmr/Dm2w3tvw+ABLVKhu1K4bfpaham2AUEElWUxe9t+NEpKUerMXA+DMO6/OEQp12FGG+LJFI7SQww8yMygij2ev8xCP6tQQ2KDUgvfqTpjpFR8ekQBqHAPjIcF/NE5GhXlEPl1q5dsZ6soemVzMXcJWiDH69cGVx/lV+4JXkZz+OZOFBBrmqcN/o7uBRdbli7gdTJOMQSyMpqDXxClSZhrm5YrYItcdM4exzGB3U8p4FfifxdJ4+w9ABR8W78zLCQb6UgUMNZOyN/z1IY5rbUwuGotwLg014Y1Vq0J63ts22vDjHxwxXd2H9QQXBV/ts5/6ZfxDgIm2KKG/Vg00bFE9+9CElGspjA2Sy71CRhNMmPPX0VYFpfZr9lR7mrlixN0Ut61TKO+EoVaTcpQEcK0+QUswwEQvZDktwTgUBtrnbJ1oZx2Y5wb+qK9OUvZG61Mdxke8pZU0WK5pkr1K3/FHeAi3CxR8hW/0RFn9ROZBKv+nhM1xQKjBPPZNNzrunJAdHJJba2Zzm9s0+QHokut1RTB9cNxwKSA6bojEUaXxeeXGtYtaqbMmhUHoK70cpy6+C6zibcq6Yn+XaBTuSD5euOQo1aQAkWMV4b4qz+vMm4n0y9A4XMmVuVK3W1Bs5PJShgw=
+          github-client-secret: AgCEutoWEF8rd2lFmrObfDO6AcAPcuTczOa8SzvaKlf6XurE6e6Llr0oULB5ptcFkv0tRg0ZF1ZR6uAuaTxSDproNZRlw3eeSkR5m1QncM7FGRK503HAvfmZfBk3/JNR9v3g2p3O5intuoDIiqiFn6XZt5w08uPtyLeZbkaKMKISBhMkm2G4BGX6w9JvZ7nhIzfnUuyNrS6twb6QNg8mQpBjr9QUM14VHX1iEkmjZ2syR0mUwARYgnmLEv/KuVs/pJ0eLGb/ek12diO+fgCfMexmPFKdPbbTYUiS+hDUcfZEcrSLgqcxE0ncr3izhVLfCl5OO0wGRupuV/PaSA10glJhR1RbmbzkKsRCuosZWSNio7fqVcy71D8Zso5ScN/Ucw9aRA12JMB5c4CfU8KMzhmUrNI3kqmSli5e5Eq619pi7f6JFHg6Hc9Xo+YhxFiG3A6ztCo7af803nSx+yrMR4oVYCHu877bx+bm2jlzrk+B+FSYWetxTuwoFZzzx+f5+CTCabUWilh5DF/1NuEVjRksZTco3mlEPTcQsYjwlRz4PAgKpfoIAyS4LEvC4WDM8kkdQMDIaH3euXMcIktLtwbtImrzvELR56WqmIIZBE21p1Wtmfz88QDXUfk9ExlMkGRsL5t3uhJ1zb8nX7rrfCj8RQk7gq1xNHYJW/s4prcWjg/YZo3PQPaRSoyPC/0sZivV5znU4BLYJuy3T5Ud1n3931gcjNy5+FkdORMXx2d6Nd+CuwzLmtsb
+        template:
+          metadata:
+            name: grafana-secret-files
+            namespace: logging-and-monitoring
+          type: Opaque

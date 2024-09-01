@@ -1,0 +1,44 @@
+prometheus:
+  
+  server:
+    podAntiAffinity: soft
+    statefulSet:
+      enabled: true
+    persistentVolume:
+      enabled: true
+      storageClass: 4546b
+    replicaCount: 3
+    retention: "7d"
+    retentionSie: "8GB"
+  
+  kube-state-metrics:
+    enabled: true
+    global:
+      replicas: 3
+    startupProbe:
+      enabled: true
+
+  prometheus-node-exporter:
+    enabled: true
+    hostPID: false
+    hostProcFsMount: 
+      mountPropagation: HostToContainer
+    hostSysFsMount:
+      mountPropagation: HostToContainer
+
+  alertmanager:
+    enabled: false
+
+  prometheus-pushgateway:
+    enabled: false
+
+  extraManifests:
+    - |      
+      apiVersion: v1
+      kind: Namespace
+      metadata:
+        name: logging-and-monitoring
+        labels:
+          kubernetes.io/metadata.name: logging-and-monitoring 
+          pod-security.kubernetes.io/enforce: privileged
+          pod-security.kubernetes.io/enforce-version: latest
