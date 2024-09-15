@@ -34,6 +34,9 @@ spec:
         server: https://kubernetes.default.svc
         namespace: '{{ path[1] }}'
       syncPolicy:
+        managedNamespaceMetadata:
+          annotations:
+            linkerd.io/inject: enabled
         automated:
           prune: true
           selfHeal: true

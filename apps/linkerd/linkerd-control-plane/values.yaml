@@ -14,3 +14,5 @@ linkerd-control-plane:
   identity:
     issuer:
       scheme: kubernetes.io/tls
+  
+  prometheusUrl: logging-and-monitoring-prometheus-server.logging-and-monitoring.svc.cluster.local
