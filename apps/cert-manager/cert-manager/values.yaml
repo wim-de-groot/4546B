@@ -1,2 +1,10 @@
 cert-manager:
   installCRDs: true
+
+extraObjects:
+  - apiVersion: v1
+    kind: Namespace
+    metadata:
+      name: cert-manager
+    annotations:
+      linkerd.io/inject: disabled

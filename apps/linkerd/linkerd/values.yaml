@@ -1,0 +1,82 @@
+linkerd-control-plane:
+  identityTrustAnchorsPEM: |
+    -----BEGIN CERTIFICATE-----
+    MIIBjzCCATSgAwIBAgIRAKICvHWiukZ89/RNRWmi608wCgYIKoZIzj0EAwIwJTEj
+    MCEGA1UEAxMacm9vdC5saW5rZXJkLmNsdXN0ZXIubG9jYWwwHhcNMjQwNTE4MDUx
+    MDM0WhcNMjkwNTE3MDUxMDM0WjAlMSMwIQYDVQQDExpyb290LmxpbmtlcmQuY2x1
+    c3Rlci5sb2NhbDBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABHo+VD3PFhNXhEYj
+    kMyOBzIHZEnZzdYBMg+isCdp5IvIypW9Q3MCIvwczMtth2tuDvQuktCp66ZvIfIt
+    Zz/a1UejRTBDMA4GA1UdDwEB/wQEAwIBBjASBgNVHRMBAf8ECDAGAQH/AgEBMB0G
+    A1UdDgQWBBSC2SSs9m0KQCTi0vrzUeHHHtt4ODAKBggqhkjOPQQDAgNJADBGAiEA
+    357y18SEJ9bh0FR7jBTE50LACImbCiNMlR91SsQNPrMCIQCXj98nliCFoxkTO96c
+    MQ5Yy6EFzbPzu1+TwJrSfC+RvA==
+    -----END CERTIFICATE-----
+  identity:
+    issuer:
+      scheme: kubernetes.io/tls
+  
+  prometheusUrl: logging-and-monitoring-prometheus-server.logging-and-monitoring.svc.cluster.local
+
+extraManifests:
+  - |
+    apiVersion: v1
+    kind: Namespace
+    metadata:
+      name: linkerd
+      labels:
+        kubernetes.io/metadata.name: linkerd 
+        pod-security.kubernetes.io/enforce: privileged
+        pod-security.kubernetes.io/enforce-version: latest
+  - |
+    
+    apiVersion: bitnami.com/v1alpha1
+    kind: SealedSecret
+    metadata:
+      name: linkerd-trust-anchor
+      namespace: linkerd
+    spec:
+      encryptedData:
+        tls.crt: AgCCiwZ8dvzEzE2rnxtmZApcQeWENeDC227ZWFQ1UbSWeUfPdnhmeCbPsO14KC3vluhKEA6iPfj8dz2hXw8C89mvrl5NVfYjRn/MELHW/L5TUASe8yxs5SegAZ5xKQi8j82k85airIE91HRmjlpfdeQKI0g718JgvHs0WRUpThSqS9vscN3YeIZHYIUDixzaPaZxrHooMLhgpAxHFd0/VnmuZNjrz4XjW0g3P6OZtNpZ2Rf6YkbWZMnrHVqS/Fz8gSietX7mCIa6o73MyAxgE8QUDbwt4/+EatzFvz47pnFKanQ1/zXrfe+slYRBTkUQsWuRaRlZlYw87fVSXOL8Qmu0eo+jbP4k5pXxn8JU0reblXYUtuN6HadqK4p0/tAaHDsoe+lkfqlwzwIMTxY30TL3GBsIYR007X7JIEZvJ6S0L6Bum4oKjeTn4vLH89H82u78S8QnXwgiywxlCvc2g08mZN9EF4skeTv4XdSSgHPqn0x7rrZDKZevMP2YA0N5JpTQ7g7dJrnfpNjzswwhRXLVVVp/AO1jZNaQLzNhMW7TZqpfFXiXdGANOCOGfM7I+NasHP/9hdr6OaomSC2SdxaBn2uUhAwFtKrvvSGWA5TzERxjI5OuFfqy6fI8f6jhXaSWTdxg+BgnH0bWrfoPozFgcsl2ffJn6iMIi6/xM3OSPX9H1Pp1bMOMzxt160YKO7o15uDRegc7hOybd8g6Px272ZSyDpjMl6rgZQjGofVtAJ5rFMhqYWsDB8ydOoCqdW7+AHvzXDxmzmdLqxw4k4o8WBzzzVRd8HdihTt84tcQnBZZ+CowDWtycHWUgVbsWAri7T8zs68tI6l9c63GfwZ/EinksAHAJnXTj64jWA4MY3H3tMA8of2iYBcKZadrkG/f2OusLgRoGQL5ZM+PpVumyvNg5zSJm9BEmrcJ5Y/HOiiqSbU3Yymv85sGNb7925lr1+OjCm6SP0pYtUe1tF5O1791+EBPusJtl36igD+OiIw7sfFNvrs/jVnr1Slaa/iafpMsqfm4khUqEC4d1y5d7wz6WFrRjR346yM0NOzZEndfacf3WIM4qkz+6G3vdg90zS/rGNlwuK//0zTeRAspeUVZwabBNztx6Yq40QZx8ezhQj4X7X+o1PHAnDOavNzIdr8li6LvVuwM2rypjp3JOBeYjIXMjtZyWMwr1q8+HLvv7Y+/FzMKD30KfUP97UqFtvbTA72YplM2F6jiTSi+U+7EaNbQicU7Ky9Bpx8xGWs34lPFuxS2Yy9csNDZWuxABszKdNrupYmTykTAJmCni8+B4cSbFnyR3H56uNUTKFUonciY5MjMw5qDLPGEl9BC6plmeDBdFyMdUi9ysLLlhJJAMqsvQXvzt53iyvz9D3WYNeF4kWGBn2nSpri3jBh7/b3K1d6VSUEGEcFfPMGBwls1u20V9P4klNmIZOsuvdioIKItCxtnrgW2CsBSJn5kP39BgvUFQLQ+/9mA+m//XLwLivA1p5v+uuo=
+        tls.key: AgAB1bnBCi/qfa6gjfDBG2tzjyJBHkzniGvPRToIwn9zz4F0j8RnAO1ic280FxLsjuVImiPYeGW2c3cOsMAik16ypRShopYvEuNxVuMLl2AxNr1G9qa32U9HLix/WzNL3zqT61qRTXgp2nqcifGnTY+KVFxgyhvSipS+jwzhrUvULLV6R1/BiRNnrIATkPxGp9EL7Zw/QqeluYinEoUk8MMyrKueIdvBVJOUtXGReVBDQw6puS7Hrk1TYDmMETMj2p0tPZpWXHSVOpEGfhSCjdekUehaFP58i+5ahYAIbms4etRuA8s1vnTjChkJX2H/JKkszUi/xfRq4+8lvGyVG8mvQhq+HGPRH+AlXnoYSREVOD8WMoA3aPkZL2mndQe3pl3dJR3EYOYLcSlSeDIqkf2x8ibQV8LVHHThg90UWaS/nM/U7C505MrS+bt5gRacoSepY/4Cw23KkL8SNa3Sd/SSknj89kuOYLf5OaAloGyxZCqEQ5O1F1vqN0GoC9TubU2nCM7j2QFy2/gCCu2Bt8p8r2tSj9Ri/vCxK2SzlQ0YCn9JOV7CPaCtNoMSp5H6HSnPgbSbXqe/dI530vhm/TTv07MiHsNcb6RXx5mHm7b73h3VY/HIdLU/hT1iwlWpd/aL0CMUB1CGCzlKXZbSOgnvas03Ay+tULCgUwa1eWeKulw21/ZfwwFPqiW3F+B0+pRZebA+TcF9u9NF18UJQ/rj18YjOT7iJ5B5AMPJjxmLkqksmz9C74iccyV35PIs/WUu13XtOMcWUNEV3nYgVc69oNqnkznGA5ejPdBxKZNwZKI+citvIT2bBYPsABPu27bqYjRVTceLYdXUUd+Yhe1yegr4zemn/fxbRkfSm5oNuH6FWpMgVuzR4qWI4lzplAz+dOO79A6q+kpotVn5bZZUbAQUG7sb8EtY5L/3yQNR8oxnKnYZH91dIKQrmEqXnvaNp1cLh6a20xDqz+CbmS14BpK7HM8Y7qNdaNSvsjkefcs6Lw==
+      template:
+        metadata:
+          annotations:
+            linkerd.io/created-by: linkerd/cli stable-2.12.0
+          labels:
+            linkerd.io/control-plane-component: identity
+            linkerd.io/control-plane-ns: linkerd
+          name: linkerd-trust-anchor
+          namespace: linkerd
+        type: kubernetes.io/tls
+  - |
+    apiVersion: cert-manager.io/v1
+    kind: Issuer
+    metadata:
+      name: linkerd-trust-anchor
+      namespace: linkerd
+    spec:
+      ca:
+        secretName: linkerd-trust-anchor
+  - |
+    apiVersion: cert-manager.io/v1
+    kind: Certificate
+    metadata:
+      name: linkerd-identity-issuer
+      namespace: linkerd
+    spec:
+      secretName: linkerd-identity-issuer
+      duration: 730h0m0s
+      renewBefore: 1h0m0s
+      issuerRef:
+        name: linkerd-trust-anchor
+        kind: Issuer
+      dnsNames:
+        - identity.linkerd.cluster.local
+      isCA: true
+      privateKey:
+        algorithm: ECDSA
+      usages:
+      - cert sign
+      - crl sign
+      - server auth
+      - client auth
