@@ -3,6 +3,7 @@ namespace: target
 resources:
   - deployment.yaml
   - service.yaml
+  - namespace.yaml
 
 labels:
   - pairs:

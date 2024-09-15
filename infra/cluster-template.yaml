@@ -1,9 +1,9 @@
 kind: Cluster
 name: 4546B 
 talos:
-  version: v1.7.4
+  version: v1.7.6
 kubernetes:
-  version: 1.29.5
+  version: 1.30.5
 features:
   enableWorkloadProxy: false
 patches:

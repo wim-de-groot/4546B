@@ -22,8 +22,6 @@ spec:
     metadata:
       name: '{{ path[1] }}-{{ path.basenameNormalized }}'
       namespace: argocd
-      annotations:
-        argocd-image-updater.argoproj.io/image-list: homeassistant/home-assistant
     spec:
       project: default
       source:
@@ -34,9 +32,6 @@ spec:
         server: https://kubernetes.default.svc
         namespace: '{{ path[1] }}'
       syncPolicy:
-        managedNamespaceMetadata:
-          annotations:
-            linkerd.io/inject: enabled
         automated:
           prune: true
           selfHeal: true

@@ -1,0 +1,6 @@
+linkerd-viz:
+  grafana:
+    url: logging-and-monitoring-grafana.logging-and-monitoring.svc.cluster.local
+  prometheusUrl: http://logging-and-monitoring-prometheus-server.logging-and-monitoring.svc.cluster.local
+  prometheus:
+    enabled: false

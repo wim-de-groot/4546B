@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mealie
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: mealie
+    spec:
+      containers:
+        - name: mealie
+          image: ghcr.io/mealie-recipes/mealie:v1.12.0
+          env:
+            - name: ALLOW_SIGNUP
+              value: false
+            - name: PUID
+              value: 1000
+            - name: PGID
+              value: 1000
+            - name: TZ
+              value: Europe/Amsterdam
+            - name: MAX_WORKERS
+              value: 1
+            - name: WEB_CONCURRENCY
+              value: 1
+            - name: BASE_URL
+              value: http://mealie.homelab.com
+            - name: DB_ENGINE 
+              value: postgres
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: database-cluster-superuser
+                  key: user
+            - name: POSTGRES_PASSWORD 
+              valueFrom:
+                secretKeyRef:
+                  name: database-cluster-superuser
+                  key: pass 
+            - name: POSTGRES_SERVER 
+              value: database-cluster-rw.home-automation.svc.cluster.local
+            - name: POSTGRES_PORT 
+              value: 5432
+            - name: POSTGRES_DB 
+              value: mealie
+          ports:
+            - containerPort: 9000
+              name: web
+          resources:
+            requests:
+              cpu: 100m
+              memory: 500Mi
+            limits:
+              cpu: 500m
+              memory: 1000Mi
+          volumeMounts:
+            - mountPath: /app/data
+              name: mealie-data
+          imagePullPolicy: IfNotPresent
+      restartPolicy: Always
+      volumes:
+        - name: mealie-data
+          emptyDir: {}

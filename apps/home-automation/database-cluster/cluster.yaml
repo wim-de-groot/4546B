@@ -1,8 +1,8 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: postgresql-cluster
-  namespace: postgresql
+  name: database-cluster
+  namespace: home-automation 
 spec:
   postgresGID: 1000
   instances: 3
