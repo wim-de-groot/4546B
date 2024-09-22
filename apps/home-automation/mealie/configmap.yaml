@@ -1,0 +1,17 @@
+apiVersion: v1	
+kind: ConfigMap	
+metadata:	
+  name: mealie	
+  namespace: home-automation	
+  labels:	
+    app.kubernetes.io/instance: home-automation-mealie	
+    app.kubernetes.io/name: mealie	
+data:	
+  ALLOW_SIGNUP: 'false'	
+  BASE_URL: 'http://mealie.homelab.com'	
+  DEFAULT_GROUP: Home	
+  MAX_WORKERS: '1'	
+  PGID: '1000'	
+  PUID: '1000'	
+  TZ: Europe/Amsterdam	
+  WEB_CONCURRENCY: '1'	

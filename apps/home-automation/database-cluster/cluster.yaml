@@ -12,6 +12,10 @@ spec:
     pg_hba:
       - hostssl all all 10.244.0.0/16 trust
       - hostnossl all all 10.244.0.0/16 trust
+  bootstrap:
+    initdb:
+      database: mealie
+      owner: mealie
   storage:
     size: 16Gi
     storageClass: 4546b
