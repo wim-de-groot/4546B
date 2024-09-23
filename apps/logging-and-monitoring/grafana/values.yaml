@@ -4,12 +4,32 @@ grafana:
   
   ingres:
     enabled: false
+
+  service:
+    port: 443
   
+  readinessProbe:
+    httpGet:
+      scheme: HTTPS
+      path: /api/health
+      port: 3000
+
+  livenessProbe:
+    httpGet:
+      scheme: HTTPS
+      path: /api/health
+      port: 3000
+    initialDelaySeconds: 60
+    timeoutSeconds: 30
+    failureThreshold: 10
+
   grafana.ini:
     server:
-      protocol: http
+      protocol: https
+      cert_key: /etc/tls/tls.key
+      cert_file: /etc/tls/tls.crt
       domain: grafana.homelab.com
-      root_url: "http://%(domain)s/"
+      root_url: "https://%(domain)s/"
     auth.github:
         enabled: true
         auto_login: false
@@ -73,6 +93,11 @@ grafana:
       defaultMode: 0440
       readOnly: true
       secretName: grafana-secret-files
+    - name: grafana-tls
+      mountPath: /etc/tls
+      defaultMode: 0440
+      readOnly: true
+      secretName: grafana-tls
   
   extraObjects:
     - apiVersion: bitnami.com/v1alpha1
@@ -89,3 +114,27 @@ grafana:
             name: grafana-secret-files
             namespace: logging-and-monitoring
           type: Opaque
+    - apiVersion: cert-manager.io/v1
+      kind: ClusterIssuer
+      metadata:
+        name: selfsigned
+      spec:
+        selfSigned: {}
+    - apiVersion: cert-manager.io/v1
+      kind: Certificate
+      metadata:
+        name: grafana
+      spec:
+        secretName: grafana-tls
+        privateKey:
+          rotationPolicy: Always
+        commonName: grafana.homelab.com
+        dnsNames:
+          - grafana.homelab.com
+        usages:
+          - digital signature
+          - key encipherment
+          - server auth
+        issuerRef:
+          name: selfsigned
+          kind: ClusterIssuer
