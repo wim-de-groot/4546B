@@ -27,21 +27,21 @@ spec:
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
-                  name: database-cluster-app
+                  name: mealie-app
                   key: user
             - name: POSTGRES_PASSWORD 
               valueFrom:
                 secretKeyRef:
-                  name: database-cluster-app
+                  name: mealie-app
                   key: pgpass
             - name: POSTGRES_SERVER 
-              value: database-cluster-rw.home-automation.svc.cluster.local
+              value: mealie-rw.home-automation.svc.cluster.local
             - name: POSTGRES_PORT 
               value: "5432"
             - name: POSTGRES_DB 
               valueFrom:
                 secretKeyRef:
-                  name: database-cluster-app
+                  name: mealie-app
                   key: dbname
           envFrom:
             - configMapRef:
