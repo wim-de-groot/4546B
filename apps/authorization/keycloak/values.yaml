@@ -1,0 +1,18 @@
+keycloak:
+  tls:
+    enabled: true
+    existingSecret: keycloak-tls
+    usePem: true
+  production: true
+  metrics:
+    enabled: true
+  postgresql:
+    enabled: false
+  externalDatabase:
+    host: keycloak-rw.authorization.svc.cluster.local
+    existingSecret: keycloak-app
+    existingSecretPortKey: port
+    existingSecretUserKey: user 
+    existingSecretDatabaseKey: dbname
+    existingSecretPasswordKey: password
+  replicaCount: 3

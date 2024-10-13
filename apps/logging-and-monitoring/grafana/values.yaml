@@ -28,7 +28,7 @@ grafana:
       protocol: https
       cert_key: /etc/tls/tls.key
       cert_file: /etc/tls/tls.crt
-      domain: grafana.homelab.com
+      domain: grafana.wimandnaomishome.com
       root_url: "https://%(domain)s/"
     auth.github:
         enabled: true
@@ -115,12 +115,6 @@ grafana:
             namespace: logging-and-monitoring
           type: Opaque
     - apiVersion: cert-manager.io/v1
-      kind: ClusterIssuer
-      metadata:
-        name: selfsigned
-      spec:
-        selfSigned: {}
-    - apiVersion: cert-manager.io/v1
       kind: Certificate
       metadata:
         name: grafana
@@ -128,13 +122,13 @@ grafana:
         secretName: grafana-tls
         privateKey:
           rotationPolicy: Always
-        commonName: grafana.homelab.com
+        commonName: grafana.wimandnaomishome.com
         dnsNames:
-          - grafana.homelab.com
+          - grafana.wimandnaomishome.com
         usages:
           - digital signature
           - key encipherment
           - server auth
         issuerRef:
-          name: selfsigned
+          name: cloudflare 
           kind: ClusterIssuer
