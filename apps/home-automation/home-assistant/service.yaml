@@ -6,6 +6,6 @@ spec:
   ports:
     - name: web
       targetPort: web
-      port: 8123
+      port: 443
       protocol: TCP
   type: ClusterIP

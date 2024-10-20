@@ -15,4 +15,3 @@ keycloak:
     existingSecretUserKey: user 
     existingSecretDatabaseKey: dbname
     existingSecretPasswordKey: password
-  replicaCount: 3

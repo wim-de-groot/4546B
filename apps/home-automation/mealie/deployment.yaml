@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: mealie
-          image: ghcr.io/mealie-recipes/mealie:v1.12.0
+          image: docker.io/wimdegroot/mealie:test
           env:
             - name: DB_ENGINE 
               value: postgres
@@ -60,6 +60,8 @@ spec:
           volumeMounts:
             - mountPath: /app/data
               name: mealie-data
+            - mountPath: /etc/tls
+              name: mealie-tls
           imagePullPolicy: IfNotPresent
           startupProbe:
             httpGet:
@@ -83,3 +85,6 @@ spec:
       volumes:
         - name: mealie-data
           emptyDir: {}
+        - name: mealie-tls
+          secret:
+            secretName: mealie-tls
