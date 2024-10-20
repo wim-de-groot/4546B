@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: mealie
-          image: ghcr.io/mealie-recipes/mealie:v1.12.0
+          image: docker.io/wimdegroot/mealie:test-v3
           env:
             - name: DB_ENGINE 
               value: postgres
@@ -43,6 +43,10 @@ spec:
                 secretKeyRef:
                   name: mealie-app
                   key: dbname
+            - name: TLS_CERTIFICATE_PATH
+              value: /etc/tls/tls.crt
+            - name: TLS_PRIVATE_KEY_PATH
+              value: /etc/tls/tls.key
           envFrom:
             - configMapRef:
                 name: mealie
@@ -60,26 +64,34 @@ spec:
           volumeMounts:
             - mountPath: /app/data
               name: mealie-data
+            - mountPath: /etc/tls
+              name: mealie-tls
           imagePullPolicy: IfNotPresent
           startupProbe:
             httpGet:
               path: / 
               port: 9000 
+              scheme: HTTPS
             failureThreshold: 30
             periodSeconds: 10
           livenessProbe:
             httpGet:
               path: /
               port: 9000
+              scheme: HTTPS
             initialDelaySeconds: 30
             periodSeconds: 3
           readinessProbe:
             httpGet:
               path: /
               port: 9000
+              scheme: HTTPS
             initialDelaySeconds: 30
             periodSeconds: 3
       restartPolicy: Always
       volumes:
         - name: mealie-data
           emptyDir: {}
+        - name: mealie-tls
+          secret:
+            secretName: mealie-tls

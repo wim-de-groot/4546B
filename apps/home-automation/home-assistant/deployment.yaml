@@ -27,10 +27,16 @@ spec:
             - mountPath: /config/configuration.yaml
               subPath: configuration.yaml
               name: home-assistant-config
+            - name: home-assistant-tls
+              mountPath: /etc/tls
+              readOnly: true
           securityContext:
             privileged: false
       restartPolicy: Always
       volumes:
+        - name: home-assistant-tls
+          secret:
+            secretName: home-assistant-tls
         - name: home-assistant-data
           persistentVolumeClaim:
             claimName: pvc-home-assistant-config
