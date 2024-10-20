@@ -15,7 +15,7 @@ homeassistant:
   currency: EUR
   country: NL
   time_zone: "Europe/Amsterdam"
-  internal_url: "http://home-assistant.homelab.com:8123"
+  internal_url: "https://home-assistant.wimandnaomishome.com"
 
 http:
   server_host: 0.0.0.0
@@ -23,3 +23,5 @@ http:
   use_x_forwarded_for: true
   trusted_proxies:
     - 10.0.0.0/16
+  ssl_certificate: /etc/tls/tls.crt
+  ssl_key: /etc/tls/tls.key 
