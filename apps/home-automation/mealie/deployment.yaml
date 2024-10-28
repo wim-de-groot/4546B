@@ -6,7 +6,13 @@ metadata:
     app.kubernetes.io/instance: home-automation-mealie	
     app.kubernetes.io/name: mealie	
 spec:
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 10
   replicas: 1
+  revisionHistoryLimit: 1
   selector:
     matchLabels:
       app.kubernetes.io/instance: home-automation-mealie	
@@ -20,7 +26,7 @@ spec:
     spec:
       containers:
         - name: mealie
-          image: docker.io/wimdegroot/mealie:test-v3
+          image: docker.io/wimdegroot/mealie:test-v5
           env:
             - name: DB_ENGINE 
               value: postgres
@@ -43,10 +49,22 @@ spec:
                 secretKeyRef:
                   name: mealie-app
                   key: dbname
+            - name: OIDC_CLIENT_ID 
+              valueFrom:
+                secretKeyRef:
+                  name: mealie
+                  key: OIDC_CLIENT_ID  
+            - name: OIDC_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: mealie
+                  key: OIDC_CLIENT_SECRET 
             - name: TLS_CERTIFICATE_PATH
               value: /etc/tls/tls.crt
             - name: TLS_PRIVATE_KEY_PATH
               value: /etc/tls/tls.key
+            - name: OIDC_TLS_CACERTFILE
+              value: /etc/trust/tls.crt
           envFrom:
             - configMapRef:
                 name: mealie
@@ -66,6 +84,8 @@ spec:
               name: mealie-data
             - mountPath: /etc/tls
               name: mealie-tls
+            - mountPath: /etc/trust
+              name: keycloak-tls
           imagePullPolicy: IfNotPresent
           startupProbe:
             httpGet:
@@ -95,3 +115,6 @@ spec:
         - name: mealie-tls
           secret:
             secretName: mealie-tls
+        - name: keycloak-tls
+          secret:
+            secretName: keycloak-tls
