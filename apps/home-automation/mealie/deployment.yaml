@@ -116,5 +116,5 @@ spec:
           secret:
             secretName: mealie-tls
         - name: keycloak-tls
-          secret:
-            secretName: keycloak-tls
+          configMap:
+            name: keycloak.wimandnaomishome.com

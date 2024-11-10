@@ -1,0 +1,13 @@
+apiVersion: trust.cert-manager.io/v1alpha1
+kind: Bundle
+metadata:
+  name: keycloak.wimandnaomishome.com
+spec:
+  sources:
+    - useDefaultCAs: true
+    - secret:
+        name: keycloak-tls
+        key: tls.crt
+  target:
+    configMap:
+      key: tls.crt

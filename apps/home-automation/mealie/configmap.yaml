@@ -11,7 +11,7 @@ data:
   OIDC_AUTO_REDIRECT: 'false'
   OIDC_PROVIDER_NAME: 'SSO'
   BASE_URL: 'https://mealie.wimandnaomishome.com:443'	
-  OIDC_CONFIGURATION_URL: 'https://authorization-keycloak.authorization.svc.cluster.local/realms/master/.well-known/openid-configuration'
+  OIDC_CONFIGURATION_URL: 'http://authorization-keycloak/realms/master/.well-known/openid-configuration'
   DEFAULT_GROUP: Home	
   MAX_WORKERS: '1'	
   PGID: '1000'	

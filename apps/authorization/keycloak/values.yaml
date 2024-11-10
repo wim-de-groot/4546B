@@ -15,3 +15,6 @@ keycloak:
     existingSecretUserKey: user 
     existingSecretDatabaseKey: dbname
     existingSecretPasswordKey: password
+  auth:
+    existingSecret: keycloak-initial-admin-creds
+    passwordSecretKey: password
