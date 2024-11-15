@@ -7,11 +7,13 @@ metadata:
     app.kubernetes.io/instance: home-automation-mealie	
     app.kubernetes.io/name: mealie	
 data:	
+  BASE_URL: 'https://mealie.wimandnaomishome.com:443'	
   OIDC_AUTH_ENABLED: 'true'
   OIDC_AUTO_REDIRECT: 'false'
   OIDC_PROVIDER_NAME: 'SSO'
-  BASE_URL: 'https://mealie.wimandnaomishome.com:443'	
-  OIDC_CONFIGURATION_URL: 'http://authorization-keycloak/realms/master/.well-known/openid-configuration'
+  OIDC_CONFIGURATION_URL: 'http://authorization-keycloak.authorization.svc.cluster.local/realms/master/.well-known/openid-configuration'
+  OIDC_USER_GROUP: read
+  OIDC_ADMIN_GROUP: admin
   DEFAULT_GROUP: Home	
   MAX_WORKERS: '1'	
   PGID: '1000'	

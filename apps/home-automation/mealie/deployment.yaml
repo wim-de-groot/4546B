@@ -26,7 +26,7 @@ spec:
     spec:
       containers:
         - name: mealie
-          image: docker.io/wimdegroot/mealie:test-v5
+          image: ghcr.io/mealie-recipes/mealie:v2.2.0 
           env:
             - name: DB_ENGINE 
               value: postgres
@@ -63,8 +63,6 @@ spec:
               value: /etc/tls/tls.crt
             - name: TLS_PRIVATE_KEY_PATH
               value: /etc/tls/tls.key
-            - name: OIDC_TLS_CACERTFILE
-              value: /etc/trust/tls.crt
           envFrom:
             - configMapRef:
                 name: mealie
