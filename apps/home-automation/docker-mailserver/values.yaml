@@ -1,0 +1,34 @@
+docker-mailserver:
+  certificate: docker-mailserver-tls
+
+  deployment:
+    strategy:
+      type: RollingUpdate
+      rollingUpdate:
+        maxSurge: 1
+        maxUnavailable: 0
+    env:
+      OVERRIDE_HOSTNAME: mail.wimandnaomishome.com
+
+    containerSecurityContext:
+      runAsUser: 26 
+      runAsGroup: 1000 
+      readOnlyRootFilesystem: false
+      privileged: false
+
+  service:
+    type: ClusterIP
+
+  persistance:
+    mail-config:
+      storageclass: 4546b
+
+    mail-data:
+      storageclass: 4546b
+
+    mail-state:
+      storageclass: 4546b
+    
+    mail-log:
+      storageclass: 4546b
+

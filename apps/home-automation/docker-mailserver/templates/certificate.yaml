@@ -1,0 +1,18 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: docker-mailserver 
+spec:
+  secretName: docker-mailserver-tls
+  privateKey:
+    rotationPolicy: Always
+  commonName: mail.wimandnaomishome.com
+  dnsNames:
+    - mail.wimandnaomishome.com
+  usages:
+    - digital signature
+    - key encipherment
+    - server auth
+  issuerRef:
+    name: cloudflare 
+    kind: ClusterIssuer
