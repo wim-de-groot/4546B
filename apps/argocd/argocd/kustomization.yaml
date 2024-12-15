@@ -2,6 +2,6 @@ namespace: argocd
 
 resources:
   - namespace.yaml
-  - github.com/argoproj/argo-cd/manifests/cluster-install?ref=v2.9.3
+  - github.com/argoproj/argo-cd/manifests/cluster-install?ref=v2.13.2
   - bootstrap-app-set.yaml
   - certificate.yaml
