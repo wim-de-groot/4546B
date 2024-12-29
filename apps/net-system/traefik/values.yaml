@@ -1,0 +1,19 @@
+traefik:
+  ports:
+    traefik:
+      expose: 
+        default: true
+    websecure:
+      tls:
+        enabled: false
+  
+  providers:
+    kubernetesIngress:
+      publishedService:
+        allowExternalNameServices: true
+        enabled: true
+  
+  logs:
+    general:
+      format: json
+      level: INFO
