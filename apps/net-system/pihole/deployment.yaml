@@ -1,0 +1,97 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pihole
+  namespace: net-system
+  labels:
+    app.kubernetes.io/name: pihole
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: pihole
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        kubectl.kubernetes.io/default-container: pihole
+      labels:
+        app.kubernetes.io/name: pihole
+    spec:
+      containers:
+        - env:
+            - name: WEB_PORT
+              value: "8080"
+            - name: WEBPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: password
+                  name: pihole-password
+          name: pihole
+          image: pihole/pihole:2024.07.0
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            privileged: false
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100Mi
+            limits:
+              cpu: 100m
+              memory: 100Mi
+          livenessProbe:
+            httpGet:
+              path: /admin/index.php
+              port: http
+              scheme: HTTP
+            initialDelaySeconds: 60 
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 10
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /admin/index.php
+              port: http
+              scheme: HTTP
+            initialDelaySeconds: 60
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 5
+            periodSeconds: 10
+          ports:
+            - name: dns
+              containerPort: 53
+              protocol: TCP
+            - name: dns-udp
+              containerPort: 53
+              protocol: UDP
+            - containerPort: 67
+              name: dhcp
+              protocol: UDP
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+            - name: https
+              containerPort: 8443
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /etc/pihole
+              name: config
+            - mountPath: /etc/dnsmasq.d/02-custom.conf
+              name: custom-dnsmasq
+              subPath: 02-custom.conf
+            - mountPath: /etc/addn-hosts
+              name: custom-dnsmasq
+              subPath: addn-hosts
+      volumes:
+        - name: config
+          emptyDir: {}
+        - name: custom-dnsmasq
+          configMap:
+            name: pihole-custom-dnsmasq
+            defaultMode: 420

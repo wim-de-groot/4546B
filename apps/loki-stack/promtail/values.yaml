@@ -1,4 +1,5 @@
 promtail:
+  enabled: false
   config:
     logLevel: info
     serverPort: 3101
