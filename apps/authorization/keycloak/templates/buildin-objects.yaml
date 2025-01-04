@@ -1,0 +1,18 @@
+apiVersion: keycloak.crossplane.io/v1alpha1
+kind: XBuiltinObjects
+metadata:
+  name: builtin-objects-4546b
+spec:
+  providerConfigName: default
+  providerSecretName: keycloak-credentials
+  realm: master
+  builtinClients: 
+    - account
+    - account-console
+    - admin-cli
+    - broker
+    - realm-management
+    - security-admin-console
+  builtinRealmRoles:
+    - offline_access
+    - uma_authorization
