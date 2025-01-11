@@ -1,0 +1,99 @@
+netbird:
+  auth:
+    authority: https://keycloak.4546b/realms/master
+    audience: netbird
+    device:
+      provider: hosted
+      audience: netbird
+      authority: https://keycloak.4546b/realms/master
+      clientID: netbird
+      deviceAuthorizationEndpoint: https://keycloak.4546b/realms/master/protocol/openid-connect/auth
+      tokenEndpoint: https://keycloak.4546b/realms/master/protocol/openid-connect/token
+      scope: openid
+      useIDToken: false
+
+  idp:
+    managerType: keycloak
+    clientID: netbird-backend
+    secretKeyRef:
+      name: netbird-backend-oidc-credentials
+      key: clientSecret
+    grantType: client_credentials
+    adminEndpoint: https://keycloak.4546b/admin/realms/master
+    tokenEndpoint: https://keycloak.4546b/realms/master/protocol/openid-connect/token
+
+  management:
+    image:
+      tag: 0.28.4
+    ingress:
+      enabled: true
+      annotations:
+        cert-manager.io/cluster-issuer: 4546b 
+      hosts:
+        - host: netbird.4546b
+          paths:
+            - path: /api
+              pathType: Prefix
+            - path: /management.ManagementService/
+              pathType: Prefix
+      tls:
+        - secretName: netbird-backend-tls-certificate
+          hosts:
+            - netbird.4546b
+
+  signal:
+    image:
+      tag: 0.28.4
+    uri: netbird.4546b:443
+    protocol: https
+    ingress:
+      enabled: true
+      annotations:
+        cert-manager.io/cluster-issuer: 4546b 
+      hosts:
+        - host: netbird.4546b
+          paths:
+            - path: /signalexchange.SignalExchange/
+              pathType: Prefix
+      tls:
+        - secretName: netbird-backend-tls-certificate
+          hosts:
+            - netbird.4546b
+
+  stun:
+    uri: stun:coturn.4546b:3478
+
+  turn:
+    uri: turn:coturn.4546b:3478
+    user: netbird
+    secretKeyRef:
+      name: netbird-turn-credentials
+      key: password
+
+netbird-dashboard:
+  image:
+    tag: v2.4.1
+
+  auth:
+    authority: https://keycloak.4546b/realms/homelab
+    audience: netbird
+    clientID: netbird
+    supportedScopes: openid profile email offline_access netbird-api
+
+  netbird:
+    managementApiEndpoint: https://netbird.4546b
+    managementGrpcApiEndpoint: https://netbird.4546b
+
+  ingress:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: 4546b
+    hosts:
+      - host: netbird.4546b
+        paths:
+          - path: /
+            pathType: Prefix
+    tls:
+      - secretName: netbird-tls-certificate
+        hosts:
+          - netbird.4546b

@@ -1,0 +1,7 @@
+apiVersion: realm.keycloak.crossplane.io/v1alpha1
+kind: Realm
+metadata:
+  name: master
+spec:
+  forProvider:
+    realm: master 

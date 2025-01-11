@@ -1,0 +1,10 @@
+apiVersion: v2
+name: netbird
+version: 0.14.2
+dependencies:
+  - name: netbird
+    version: 0.14.2
+    repository: https://charts.jaconi.io
+  - name: netbird-dashboard
+    version: 1.0.0
+    repository: https://charts.jaconi.io

@@ -1,0 +1,13 @@
+apiVersion: trust.cert-manager.io/v1alpha1
+kind: Bundle
+metadata:
+  name: 4546b
+spec:
+  sources:
+  - useDefaultCAs: true
+  - secret:
+      name: 4546b
+      key: ca.crt
+  target:
+    configMap:
+      key: "trust-bundle.pem"
