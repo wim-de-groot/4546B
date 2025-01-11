@@ -16,8 +16,6 @@ spec:
               revision: '{{ revision }}'
               directories:
                 - path: '{{ repoPath }}'
-  syncPolicy:
-    preserveResourcesOnDeletion: true
   template:
     metadata:
       name: '{{ path[1] }}-{{ path.basenameNormalized }}'
@@ -51,3 +49,7 @@ spec:
           kind: StatefulSet
           jsonPointers:
             - /spec/volumeClaimTemplates
+        - group: "apiextensions.k8s.io"
+          kind: CustomResourceDefinition
+          jsonPointers:
+            - /spec/conversion/webhook/clientConfig/caBundle

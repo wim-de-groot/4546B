@@ -7,7 +7,7 @@ spec:
   ports:
     - name: web
       protocol: TCP
-      port: 443 
+      port: 80 
       targetPort: web
   selector:	
     app.kubernetes.io/name: mealie

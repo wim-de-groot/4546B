@@ -5,7 +5,7 @@ metadata:
 spec:
   providerConfigName: default
   providerSecretName: keycloak-credentials
-  realm: master
+  realm: 4546b 
   builtinClients: 
     - account
     - account-console

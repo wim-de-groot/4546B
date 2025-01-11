@@ -8,4 +8,4 @@ metadata:
 data:
   02-custom.conf: |
     addn-hosts=/etc/addn-hosts
-    server=/.4546b/10.0.0.240
+    server=/.united/10.0.0.240

@@ -26,7 +26,7 @@ spec:
     spec:
       containers:
         - name: mealie
-          image: ghcr.io/mealie-recipes/mealie:v2.2.0 
+          image: ghcr.io/mealie-recipes/mealie:v2.5.0 
           env:
             - name: DB_ENGINE 
               value: postgres
@@ -50,19 +50,12 @@ spec:
                   name: mealie-app
                   key: dbname
             - name: OIDC_CLIENT_ID 
-              valueFrom:
-                secretKeyRef:
-                  name: mealie
-                  key: OIDC_CLIENT_ID  
+              value: mealie 
             - name: OIDC_CLIENT_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: mealie
-                  key: OIDC_CLIENT_SECRET 
-            - name: TLS_CERTIFICATE_PATH
-              value: /etc/tls/tls.crt
-            - name: TLS_PRIVATE_KEY_PATH
-              value: /etc/tls/tls.key
+                  name: mealie-oidc-credentials
+                  key: password
           envFrom:
             - configMapRef:
                 name: mealie
@@ -80,39 +73,37 @@ spec:
           volumeMounts:
             - mountPath: /app/data
               name: mealie-data
-            - mountPath: /etc/tls
-              name: mealie-tls
-            - mountPath: /etc/trust
-              name: keycloak-tls
+            - mountPath: /etc/ssl/certs/trust-bundle.pem
+              name: trustbundle
+              subPath: trust-bundle.pem
           imagePullPolicy: IfNotPresent
           startupProbe:
             httpGet:
               path: / 
               port: 9000 
-              scheme: HTTPS
+              scheme: HTTP
+            initialDelaySeconds: 60
             failureThreshold: 30
             periodSeconds: 10
           livenessProbe:
             httpGet:
               path: /
               port: 9000
-              scheme: HTTPS
-            initialDelaySeconds: 30
+              scheme: HTTP
+            initialDelaySeconds: 0
             periodSeconds: 3
           readinessProbe:
             httpGet:
               path: /
               port: 9000
-              scheme: HTTPS
-            initialDelaySeconds: 30
+              scheme: HTTP
+            initialDelaySeconds: 0
             periodSeconds: 3
       restartPolicy: Always
       volumes:
         - name: mealie-data
           emptyDir: {}
-        - name: mealie-tls
-          secret:
-            secretName: mealie-tls
-        - name: keycloak-tls
+        - name: trustbundle
           configMap:
-            name: keycloak.wimandnaomishome.com
+            name: 4546b
+            defaultMode: 420

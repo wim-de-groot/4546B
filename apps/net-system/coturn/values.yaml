@@ -5,13 +5,13 @@ coturn:
     - --listening-ip=0.0.0.0
   certificate:
     enabled: true
-    dnsName: coturn.4546b
+    dnsName: coturn.united
     issuerName: 4546b
   service:
     type: LoadBalancer
     annotations:
-      external-dns.alpha.kubernetes.io/hostname: coturn.4546b
-  users:
+      external-dns.alpha.kubernetes.io/hostname: coturn.united
+    users:
     - name: netbird
       secretKeyRef:
         name: netbird-turn-credentials

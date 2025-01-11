@@ -1,0 +1,13 @@
+emqx:
+  ingress:
+    mqtt:
+      enabled: true
+      hosts: 
+        - mqtt.united
+      tls:
+        - hosts:
+            - mqtt.united
+          secretName: mqtt.united-tls
+      annotations:
+        cert-manager.io/cluster-issuer: 4546b
+        traefik.ingress.kubernetes.io/router.entrypoints: websecure

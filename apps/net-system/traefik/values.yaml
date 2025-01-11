@@ -1,12 +1,4 @@
 traefik:
-  ports:
-    traefik:
-      expose: 
-        default: true
-    websecure:
-      tls:
-        enabled: false
-  
   providers:
     kubernetesIngress:
       publishedService:

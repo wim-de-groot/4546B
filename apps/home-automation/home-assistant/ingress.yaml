@@ -1,0 +1,50 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: 4546b
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+  name: home-assistant
+  namespace: home-automation
+spec:
+  rules:
+    - host: home-assistant.united
+      http:
+        paths:
+          - backend:
+              service:
+                name: home-assistant
+                port:
+                  name: web 
+            path: /
+            pathType: ImplementationSpecific
+  tls:
+    - hosts:
+        - home-assistant.united
+      secretName: home-assistant.united-tls
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: 4546b
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+  name: homekit-bridge 
+  namespace: home-automation
+spec:
+  rules:
+    - host: homekit-bridge.united
+      http:
+        paths:
+          - backend:
+              service:
+                name: homekit-bridge
+                port:
+                  name: bridge 
+            path: /
+            pathType: ImplementationSpecific
+  tls:
+    - hosts:
+        - homekit-bridge.united
+      secretName: homekit-bridge.united-tls
+

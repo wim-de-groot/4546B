@@ -1,10 +1,10 @@
 namespace: home-automation
 
 resources:
+  - ingress.yaml
   - deployment.yaml
   - service.yaml
   - storage.yaml
-  - certificate.yaml
 
 configMapGenerator:
   - name: home-assistant-config

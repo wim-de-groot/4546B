@@ -9,5 +9,6 @@ spec:
     firstName: Bob
     lastName: Bobson
     username: bob
+    realmId: 4546b
     realmIdRef:
-      name: master
+      name: 4546b 

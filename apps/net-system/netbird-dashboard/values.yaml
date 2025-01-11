@@ -1,0 +1,83 @@
+auth:
+  authority: https://keycloak.united/realms/4546b
+  audience: netbird
+  clientID: netbird
+  supportedScopes: openid profile email offline_access netbird-api
+  userIDClaim: sub
+
+netbird:
+  managementApiEndpoint: https://netbird.united
+  managementGrpcApiEndpoint: https://netbird.united
+  disableIPv6: true
+
+replicaCount: 1
+
+image:
+  repository: netbirdio/dashboard
+  pullPolicy: IfNotPresent
+  tag: v2.8.2
+
+imagePullSecrets: []
+
+nameOverride: ""
+
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+podSecurityContext: {}
+
+securityContext: {}
+
+service:
+  type: ClusterIP
+  port: 80
+
+
+ingress:
+  enabled: true
+
+  annotations:
+    cert-manager.io/cluster-issuer: 4546b
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+
+  hosts:
+    - host: netbird.united
+      paths:
+        - path: /
+          pathType: Prefix 
+
+  tls:
+    - secretName: netbird-tls-certificate
+      hosts:
+        - netbird.united
+
+resources: {}
+
+autoscaling:
+  enabled: false
+
+  minReplicas: 1
+
+  maxReplicas: 100
+
+  targetCPUUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+extraVolumeMounts:
+  - name: trustbundle
+    mountPath: /etc/ssl/certs/trust-bundle.pem
+    subPath: trust-bundle.pem
+
+extraVolumes:
+  - name: trustbundle
+    configMap:
+      name: 4546b

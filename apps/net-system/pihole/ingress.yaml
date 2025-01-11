@@ -5,7 +5,7 @@ metadata:
   namespace: net-system
 spec:
   rules:
-  - host: pihole.4546b
+  - host: pihole.united
     http:
       paths:
       - path: /
