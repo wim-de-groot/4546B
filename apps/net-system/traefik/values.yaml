@@ -4,7 +4,7 @@ traefik:
       publishedService:
         allowExternalNameServices: true
         enabled: true
-  
+
   logs:
     general:
       format: json

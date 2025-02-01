@@ -1,7 +1,7 @@
 kind: Cluster
 name: 4546B 
 talos:
-  version: v1.8.3
+  version: v1.9.2
 kubernetes:
   version: 1.31.2
 features:
@@ -13,7 +13,7 @@ patches:
 kind: ControlPlane
 machineClass:
   name: controlplane
-  size: 3
+  size: 3 
 patches:
   - name: scheduling
     file: infra/patches/scheduling.yaml

@@ -9,16 +9,3 @@ spec:
       port: 80
       protocol: TCP
   type: ClusterIP
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: homekit-bridge 
-spec:
-  ports:
-    - name: bridge
-      targetPort: bridge
-      port: 80
-      protocol: TCP
-  type: ClusterIP
-
