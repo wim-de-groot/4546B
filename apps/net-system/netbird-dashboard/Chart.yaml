@@ -1,9 +1,0 @@
-apiVersion: v2
-name: netbird-dashboard
-version: 1.0.0
-dependencies:
-  - name: common
-    version: 2.27.0
-    repository: oci://registry-1.docker.io/bitnamicharts
-    tags:
-      - bitnami-common

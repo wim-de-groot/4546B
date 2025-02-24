@@ -49,13 +49,13 @@ spec:
                 secretKeyRef:
                   name: mealie-app
                   key: dbname
-            - name: OIDC_CLIENT_ID 
-              value: mealie 
-            - name: OIDC_CLIENT_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: mealie-oidc-credentials
-                  key: password
+                  #            - name: OIDC_CLIENT_ID 
+                  #              value: mealie 
+                  #            - name: OIDC_CLIENT_SECRET
+                  #              valueFrom:
+                  #                secretKeyRef:
+                  #                  name: mealie-oidc-credentials
+                  #                  key: password
           envFrom:
             - configMapRef:
                 name: mealie
