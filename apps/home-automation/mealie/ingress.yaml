@@ -6,6 +6,10 @@ metadata:
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
   name: mealie
   namespace: home-automation 
+  labels:
+    argocd.argoproj.io/instance: home-automation-mealie
+    app.kubernetes.io/instance: home-automation-mealie	
+    app.kubernetes.io/name: mealie	
 spec:
   rules:
     - host: mealie.united

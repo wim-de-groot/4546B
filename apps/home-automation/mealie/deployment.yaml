@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   name: mealie
   labels:	
+    argocd.argoproj.io/instance: home-automation-mealie
     app.kubernetes.io/instance: home-automation-mealie	
     app.kubernetes.io/name: mealie	
 spec:
@@ -15,7 +16,6 @@ spec:
   revisionHistoryLimit: 1
   selector:
     matchLabels:
-      app.kubernetes.io/instance: home-automation-mealie	
       app.kubernetes.io/name: mealie	
   template:
     metadata:
@@ -49,13 +49,13 @@ spec:
                 secretKeyRef:
                   name: mealie-app
                   key: dbname
-            - name: OIDC_CLIENT_ID 
-              value: mealie 
-            - name: OIDC_CLIENT_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: mealie-oidc-credentials
-                  key: password
+                  #            - name: OIDC_CLIENT_ID 
+                  #              value: mealie 
+                  #            - name: OIDC_CLIENT_SECRET
+                  #              valueFrom:
+                  #                secretKeyRef:
+                  #                  name: mealie-oidc-credentials
+                  #                  key: password
           envFrom:
             - configMapRef:
                 name: mealie

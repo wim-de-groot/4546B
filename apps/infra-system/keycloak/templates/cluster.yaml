@@ -1,12 +1,11 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: mealie 
-  namespace: home-automation 
+  name: keycloak 
+  namespace: infra-system
   labels:
-    argocd.argoproj.io/instance: home-automation-mealie
-    app.kubernetes.io/instance: home-automation-mealie	
-    app.kubernetes.io/name: mealie
+    app.kubernetes.io/instance: infra-system-keycloak
+    argocd.argoproj.io/instance: infra-system-keycloak
 spec:
   postgresGID: 1000
   instances: 3
@@ -18,8 +17,8 @@ spec:
       - hostnossl all all 10.244.0.0/16 trust
   bootstrap:
     initdb:
-      database: mealie
-      owner: mealie
+      database: keycloak 
+      owner: keycloak 
   storage:
     size: 16Gi
     storageClass: 4546b
