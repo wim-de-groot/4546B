@@ -1,7 +1,0 @@
-apiVersion: realm.keycloak.crossplane.io/v1alpha1
-kind: Realm
-metadata:
-  name: 4546b
-spec:
-  forProvider:
-    realm: 4546b 

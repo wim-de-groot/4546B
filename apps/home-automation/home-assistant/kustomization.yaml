@@ -19,4 +19,6 @@ labels:
     includeSelectors: true
   - pairs:
       app.kubernetes.io/version: "2024.1"
+      app.kubernetes.io/instance: home-automation-home-assistant
+      argocd.argoproj.io/instance: home-automation-home-assistant
     includeSelectors: false
