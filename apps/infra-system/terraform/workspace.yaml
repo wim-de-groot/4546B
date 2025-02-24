@@ -1,0 +1,20 @@
+apiVersion: tf.upbound.io/v1beta1
+kind: Workspace
+metadata:
+  name: test 
+  namespace: infra-system
+  annotations:
+    crossplane.io/external-name: test 
+spec:
+  writeConnectionSecretToRef:
+    namespace: infra-system 
+    name: terraform-workspace-test
+  forProvider:
+    source: Inline
+    module: |
+      resource "random_pet" "test" {
+      }
+
+      output "test" {
+        value       = random_pet.test.id
+      }

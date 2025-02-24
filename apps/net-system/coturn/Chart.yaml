@@ -1,7 +1,0 @@
-apiVersion: v2
-name: coturn
-version: 1.0.0
-dependencies:
-  - name: coturn
-    version: 1.0.0
-    repository: https://charts.jaconi.io
