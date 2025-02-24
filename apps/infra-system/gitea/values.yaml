@@ -1,0 +1,53 @@
+gitea:
+  ingress:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: 4546b 
+      traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    hosts:
+      - host: gitea.united
+        paths:
+          - path: /
+            pathType: Prefix
+    tls:
+      - secretName: gitea-tls
+        hosts:
+          - gitea.united
+
+  persistance:
+    enabled: true
+    storageClass: 4546b
+
+  deployment:
+    env:
+      - name: USER
+        valueFrom:
+          secretKeyRef:
+            name: gitea-app
+            key: user
+      - name: PASSWD
+        valueFrom:
+          secretKeyRef:
+            name: gitea-app
+            key: pgpass
+
+  gitea:
+    existingSecret: gitea-admin
+
+    config:
+      database:
+        HOST: gitea-rw.infra-system.svc.cluster.local
+        NAME: gitea
+        SCHEMA: gitea
+    
+    oauth: []
+
+  redis-cluster:
+    enabled: false
+
+  postgresql:
+    enabled: false
+
+  postgresql-ha:
+    enabled: false
+

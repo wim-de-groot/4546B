@@ -1,0 +1,21 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: keycloak 
+  namespace: infra-system
+spec:
+  postgresGID: 1000
+  instances: 3
+  primaryUpdateStrategy: unsupervised
+  enableSuperuserAccess: true
+  postgresql:
+    pg_hba:
+      - hostssl all all 10.244.0.0/16 trust
+      - hostnossl all all 10.244.0.0/16 trust
+  bootstrap:
+    initdb:
+      database: keycloak 
+      owner: keycloak 
+  storage:
+    size: 16Gi
+    storageClass: 4546b
