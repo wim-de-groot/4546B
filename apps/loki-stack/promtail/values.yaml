@@ -1,7 +1,0 @@
-promtail:
-  enabled: false
-  config:
-    logLevel: info
-    serverPort: 3101
-    clients:
-      - url: http://loki:3100/loki/api/v1/push
