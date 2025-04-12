@@ -3,8 +3,6 @@ kind: Service
 metadata:
   name: mealie
   labels:
-    argocd.argoproj.io/instance: home-automation-mealie
-    app.kubernetes.io/instance: home-automation-mealie	
     app.kubernetes.io/name: mealie	
 spec:
   type: ClusterIP

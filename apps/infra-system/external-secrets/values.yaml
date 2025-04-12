@@ -1,3 +1,0 @@
-external-secrets:
-  commonLabels:
-    argocd.argoproj.io/instance: infra-system-external-secrets

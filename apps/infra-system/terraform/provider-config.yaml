@@ -32,4 +32,5 @@ spec:
       username  = "user"
       password  = file("${path.module}/password")
       url       = "http://infra-system-keycloak.infra-system.svc.cluster.local"
+      client_timeout = 180
     }

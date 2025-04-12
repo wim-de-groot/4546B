@@ -21,6 +21,10 @@ spec:
           ports:
             - containerPort: 8123
               name: web
+            - containerPort: 21063
+              name: homekit-tcp
+            - containerPort: 5353
+              name: homekit-udp
           volumeMounts:
             - mountPath: /config
               name: home-assistant-data

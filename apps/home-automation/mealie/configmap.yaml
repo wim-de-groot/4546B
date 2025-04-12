@@ -4,8 +4,6 @@ metadata:
   name: mealie	
   namespace: home-automation	
   labels:	
-    argocd.argoproj.io/instance: home-automation-mealie
-    app.kubernetes.io/instance: home-automation-mealie	
     app.kubernetes.io/name: mealie	
 data:	
   BASE_URL: 'https://mealie.united:443'	

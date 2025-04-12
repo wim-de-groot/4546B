@@ -3,9 +3,6 @@ kind: Cluster
 metadata:
   name: keycloak 
   namespace: infra-system
-  labels:
-    app.kubernetes.io/instance: infra-system-keycloak
-    argocd.argoproj.io/instance: infra-system-keycloak
 spec:
   postgresGID: 1000
   instances: 3

@@ -3,15 +3,8 @@ cert-manager:
 
   namespace: infra-system
 
-  global:
-    commonLabels:
-      argocd.argoproj.io/instance: infra-system-cert-manager
-
 trust-manager:
   namespace: infra-system
-
-  commonLabels:
-    argocd.argoproj.io/instance: infra-system-cert-manager
   
   app:
     trust:

@@ -2,15 +2,14 @@ argo-cd:
 
   global:
     domain: argo-cd.united
-
-    additionalLabels:
-      app.kubernetes.io/instance: infra-system-argo-cd
-      argocd.argoproj.io/instance: infra-system-argo-cd
     
   configs:
     cm: 
       create: true
       url: https://argocd.united
+
+      application.instanceLabelKey: app.kubernetes.io/instance
+      application.resourceTrackingMethod: label
 
     params:
       server.insecure: true
@@ -45,9 +44,6 @@ argo-cd:
       kind: ApplicationSet
       metadata:
         name: bootstrap
-        labels:
-          app.kubernetes.io/instance: infra-system-argo-cd
-          argocd.argoproj.io/instance: infra-system-argo-cd
       spec:
         generators:
           - matrix:

@@ -1,6 +1,4 @@
 keycloak:
-  commonLabels:
-    argocd.argoproj.io/instance: infra-system-keycloak
   production: true
   proxyHeaders: "xforwarded"
   proxy: edge
