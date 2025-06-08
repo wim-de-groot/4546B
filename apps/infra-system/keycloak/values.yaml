@@ -1,3 +1,9 @@
+nameOverride: keycloak-operator
+
+global:
+  image:
+    tag: ''
+
 keycloak:
   production: true
   proxyHeaders: "xforwarded"
