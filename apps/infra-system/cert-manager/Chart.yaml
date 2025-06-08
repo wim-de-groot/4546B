@@ -3,7 +3,7 @@ name: cert-manager
 version: v1.9.1
 dependencies:
   - name: cert-manager
-    version: v1.9.1
+    version: v1.17.2
     repository: https://charts.jetstack.io 
   - name: trust-manager
     version: 0.13.0
