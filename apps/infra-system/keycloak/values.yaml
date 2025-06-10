@@ -1,4 +1,5 @@
 nameOverride: keycloak-operator
+namespaceOverride: infra-system
 
 global:
   image:
