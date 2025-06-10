@@ -5,7 +5,7 @@ metadata:
   labels:
     app.kubernetes.io/name: {{ .Values.nameOverride | default .Chart.Name }}
     app.kubernetes.io/version: {{ .Values.global.image.tag | default .Chart.AppVersion }}
-  name: keycloakcontroller-cluster-role
+  name: {{ .Values.nameOverride | default .Chart.Name }}-clusterrole
 rules:
   - apiGroups:
       - k8s.keycloak.org
