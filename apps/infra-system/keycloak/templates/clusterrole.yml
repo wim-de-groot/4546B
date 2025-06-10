@@ -13,6 +13,7 @@ rules:
       - keycloaks
       - keycloaks/status
       - keycloaks/finalizers
+      - keycloakrealmimports
     verbs:
       - get
       - list
