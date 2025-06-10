@@ -5,6 +5,14 @@ metadata:
   name: {{ .Values.nameOverride | default .Chart.Name }}-role
 rules:
   - apiGroups:
+      - k8s.keycloak.org
+    resources:
+      - keycloakrealmimports
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
       - apps
     resources:
       - statefulsets
