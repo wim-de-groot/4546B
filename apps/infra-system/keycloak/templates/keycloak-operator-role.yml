@@ -2,7 +2,7 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: {{ .Values.nameOverride | default .Chart.Name }}-role
+  name: keycloak-operator-role
 rules:
   - apiGroups:
       - apps
