@@ -3,5 +3,5 @@ name: emqx
 version: 5.8.0
 dependencies:
   - name: emqx
-    version: 5.8.6
+    version: 5.8.7
     repository: https://repos.emqx.io/charts
