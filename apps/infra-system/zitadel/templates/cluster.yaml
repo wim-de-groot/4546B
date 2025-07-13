@@ -1,0 +1,25 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: {{ .Release.Name }} 
+  namespace: {{ .Release.Namespace }} 
+  labels:
+    app.kubernetes.io/name: {{ .Release.Name }}
+spec:
+  postgresGID: 1000
+  instances: 3
+  primaryUpdateStrategy: unsupervised
+  enableSuperuserAccess: true
+  postgresql:
+    pg_hba:
+      - hostssl all all 10.244.0.0/16 trust
+      - hostnossl all all 10.244.0.0/16 trust
+  bootstrap:
+    initdb:
+      database: {{ .Release.Name }}
+      owner: {{ .Release.Name }}
+      secret:
+        name: '{{ .Release.Name }}-database-secret'
+  storage:
+    size: 16Gi
+    storageClass: 4546b
