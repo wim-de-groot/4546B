@@ -42,6 +42,7 @@ spec:
               mountPath: /etc/ssl/certs/trust-bundle.pem
               subPath: trust-bundle.pem
               readOnly: true
+            - name: apache-config
               mountPath: /usr/local/apache2/conf/extra/trust-bundle.conf
               subPath: trust-bundle.conf
               readOnly: true
@@ -56,8 +57,6 @@ spec:
         - name: trust-bundle
           configMap:
             name: trust-bundle
-        - name: apache-run
-          emptyDir: {}
         - name: apache-config
           configmap:
             name: apache-config
