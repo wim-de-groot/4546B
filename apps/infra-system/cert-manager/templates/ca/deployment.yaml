@@ -56,7 +56,7 @@ spec:
       volumes:
         - name: trust-bundle
           configMap:
-            name: trust-bundle
+            name: trustbundle
         - name: apache-config
           configMap:
             name: ca-apache-config
