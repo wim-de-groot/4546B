@@ -7,6 +7,8 @@ metadata:
 data:
   trust-bundle.conf: |
     Listen 8080
+    ErrorLog /dev/stderr
+    TransferLog /dev/stdout
     
     Alias /trust-bundle.pem /etc/ssl/certs/trust-bundle.pem
 
