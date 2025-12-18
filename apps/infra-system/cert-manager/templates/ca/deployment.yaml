@@ -59,4 +59,4 @@ spec:
             name: trust-bundle
         - name: apache-config
           configmap:
-            name: apache-config
+            name: ca-apache-config
