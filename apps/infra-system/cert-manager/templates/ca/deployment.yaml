@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ca
+  labels:
+    app.kubernetes.io/name: ca
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ca
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: ca
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1001
+        runAsGroup: 1001
+        fsGroup: 1001
+      containers:
+        - name: apache
+          image: httpd:2.4
+          args:
+            - "-DFOREGROUND"
+            - "-f"
+            - "/usr/local/apache2/conf/httpd.conf"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+              name: http
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+          volumeMounts:
+            - name: trust-bundle
+              mountPath: /etc/ssl/certs/trust-bundle.pem
+              subPath: trust-bundle.pem
+              readOnly: true
+              mountPath: /usr/local/apache2/conf/extra/trust-bundle.conf
+              subPath: trust-bundle.conf
+              readOnly: true
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 250m
+              memory: 128Mi
+      volumes:
+        - name: trust-bundle
+          configMap:
+            name: trust-bundle
+        - name: apache-run
+          emptyDir: {}
+        - name: apache-config
+          configmap:
+            name: apache-config

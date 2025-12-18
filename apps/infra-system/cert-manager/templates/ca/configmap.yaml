@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ca
+  labels:
+    app.kubernetes.io/name: ca
+data:
+  trust-bundle.conf: |
+    Listen 8080
+    
+    Alias /trust-bundle.pem /etc/ssl/certs/trust-bundle.pem
+
+    <Directory "/etc/ssl/certs">
+        Require all granted
+        Options -Indexes
+        AllowOverride None
+    </Directory>
