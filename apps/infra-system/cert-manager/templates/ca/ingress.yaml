@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: apache
+  labels:
+    app.kubernetes.io/name: ca
+  annotations:
+    cert-manager.io/cluster-issuer: 4546b
+    traefik.ingress.kubernetes.io/router.entrypoints: web
+spec:
+  rules:
+    - host: ca.united
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: ca
+                port:
+                  number: 80
