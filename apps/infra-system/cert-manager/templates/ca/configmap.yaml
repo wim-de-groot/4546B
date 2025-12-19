@@ -5,15 +5,9 @@ metadata:
   labels:
     app.kubernetes.io/name: ca-apache-config
 data:
-  trust-bundle.conf: |
+  overrides.conf: |
     Listen 8080
+    ServerName ca.united
+
     ErrorLog /dev/stderr
     TransferLog /dev/stdout
-    
-    Alias /trust-bundle.pem /etc/ssl/certs/trust-bundle.pem
-
-    <Directory "/etc/ssl/certs">
-        Require all granted
-        Options -Indexes
-        AllowOverride None
-    </Directory>
