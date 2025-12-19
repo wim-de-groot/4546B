@@ -21,7 +21,7 @@ spec:
         runAsGroup: 1001
         fsGroup: 1001
       containers:
-        - name: apache
+          name: apache
           image: httpd:2.4
           imagePullPolicy: IfNotPresent
           ports:
@@ -34,16 +34,16 @@ spec:
               drop:
                 - ALL
           volumeMounts:
+            - name: apache-config
+              mountPath: /usr/local/apache2/conf/httpd.conf
+              subPath: httpd.conf
+              readOnly: true
+            - name: apache-run
+              mountPath: /usr/local/apache2/logs
             - name: trust-bundle
               mountPath: /usr/local/apache2/htdocs/trust-bundle.pem
               subPath: trust-bundle.pem
               readOnly: true
-            - name: apache-config
-              mountPath: /usr/local/apache2/conf/extra/overrides.conf
-              subPath: overrides.conf
-              readOnly: true
-            - name: apache-run
-              mountPath: /usr/local/apache2/logs
           resources:
             requests:
               cpu: 50m
