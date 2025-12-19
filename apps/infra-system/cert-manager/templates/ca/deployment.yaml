@@ -42,6 +42,8 @@ spec:
               mountPath: /usr/local/apache2/conf/extra/trust-bundle.conf
               subPath: trust-bundle.conf
               readOnly: true
+            - name: apache-run
+              mountPath: /usr/local/apache2/logs
           resources:
             requests:
               cpu: 50m
@@ -50,9 +52,11 @@ spec:
               cpu: 250m
               memory: 128Mi
       volumes:
-        - name: trust-bundle
-          configMap:
-            name: 4546b
         - name: apache-config
           configMap:
             name: ca-apache-config
+        - name: apache-run
+          emptyDir: {}
+        - name: trust-bundle
+          configMap:
+            name: 4546b
