@@ -2,8 +2,6 @@ apiVersion: trust.cert-manager.io/v1alpha1
 kind: Bundle
 metadata:
   name: 4546b
-  labels:
-    argocd.argoproj.io/instance: infra-system-cert-manager
 spec:
   sources:
   - useDefaultCAs: true
@@ -13,3 +11,16 @@ spec:
   target:
     configMap:
       key: "trust-bundle.pem"
+---
+apiVersion: trust.cert-manager.io/v1alpha1
+kind: Bundle
+metadata:
+  name: ca.pem
+spec:
+  sources:
+  - secret:
+      name: 4546b
+      key: ca.crt
+  target:
+    configMap:
+      key: "ca.pem"
