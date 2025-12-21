@@ -61,7 +61,7 @@ spec:
             name: ca-apache-config
         - name: apache-run
           emptyDir: {}
-        - name: trust-bundle
+        - name: ca
           configMap:
             name: "ca.pem"
         - name: trust-bundle
