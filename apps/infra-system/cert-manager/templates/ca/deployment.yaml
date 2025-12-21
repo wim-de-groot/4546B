@@ -40,6 +40,10 @@ spec:
               readOnly: true
             - name: apache-run
               mountPath: /usr/local/apache2/logs
+            - name: ca
+              mountPath: /usr/local/apache2/htdocs/ca.pem
+              subPath: ca.pem
+              readOnly: true
             - name: trust-bundle
               mountPath: /usr/local/apache2/htdocs/trust-bundle.pem
               subPath: trust-bundle.pem
@@ -57,6 +61,9 @@ spec:
             name: ca-apache-config
         - name: apache-run
           emptyDir: {}
+        - name: trust-bundle
+          configMap:
+            name: "ca.pem"
         - name: trust-bundle
           configMap:
             name: 4546b
