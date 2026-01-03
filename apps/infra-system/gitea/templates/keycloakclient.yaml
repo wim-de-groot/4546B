@@ -4,17 +4,9 @@ metadata:
   name: gitea
   namespace: infra-system
 spec:
-  clientId: $gitea-oauth2-credentials:key
+  clientId: gitea
   secret: $gitea-oauth2-credentials:secret
   realmRef:
     kind: ClusterKeycloakRealm
     name: 4546b
   webUrl: https://gitea.united
-  authorization:
-    scopes:
-      - basic
-      - email
-      - offline_access
-      - profile
-      - roles
-      - web-origins
