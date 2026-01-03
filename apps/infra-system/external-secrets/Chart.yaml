@@ -3,5 +3,5 @@ name: external-secrets
 version: v1.9.1
 dependencies:
   - name: external-secrets
-    version: 1.2.0
+    version: 1.2.1
     repository: https://charts.external-secrets.io
