@@ -43,11 +43,9 @@ gitea:
 
     oauth:
       - name: Keycloak
-        provider: openID connect
+        provider: openidConnect
         existingSecret: gitea-oauth2-credentials
         autoDiscoverUrl: https://keycloak.united/realms/4546b/.well-known/openid-configuration
-        skipLocal2fa: "true"
-        groupClaimName: groups
 
   redis-cluster:
     enabled: false
