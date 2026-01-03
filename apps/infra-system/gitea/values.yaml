@@ -20,7 +20,7 @@ gitea:
 
   gitea:
     existingSecret: gitea-admin
-    
+
     additionalConfigFromEnvs:
       - name: GITEA__DATABASE__DB_TYPE
         value: postgres
@@ -41,7 +41,13 @@ gitea:
             name: gitea-app
             key: pgpass
 
-    oauth: []
+    oauth:
+      - name: Keycloak
+        provider: openID connect
+        existingSecret: gitea-oauth2-credentials
+        autoDiscoverUrl: https://keycloak.united/realms/4546b/.well-known/openid-configuration
+        skipLocal2fa: "true"
+        groupClaimName: groups
 
   redis-cluster:
     enabled: false
