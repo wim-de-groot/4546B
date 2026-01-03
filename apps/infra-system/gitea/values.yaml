@@ -47,6 +47,22 @@ gitea:
         existingSecret: gitea-oauth2-credentials
         autoDiscoverUrl: https://keycloak.united/realms/4546b/.well-known/openid-configuration
 
+  extraVolumes:
+    - name: trustbundle
+      configMap:
+        name: 4546b
+        defaultMode: 420
+
+  extraContainerVolumeMounts:
+    - mountPath: /etc/ssl/certs/trust-bundle.pem
+      name: trustbundle
+      subPath: trust-bundle.pem
+
+  extraInitVolumeMounts:
+    - mountPath: /etc/ssl/certs/trust-bundle.pem
+      name: trustbundle
+      subPath: trust-bundle.pem
+
   redis-cluster:
     enabled: false
 
