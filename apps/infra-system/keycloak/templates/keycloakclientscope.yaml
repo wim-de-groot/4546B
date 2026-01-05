@@ -19,4 +19,4 @@ spec:
       protocolMapper: oidc-group-membership-mapper
   realmRef:
     kind: ClusterKeycloakRealm
-    name: 4546b
+    name: internal
