@@ -1,0 +1,25 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: keycloak 
+  namespace: infra-system
+  labels:
+    app.kubernetes.io/name: keycloak
+    app.kubernetes.io/instance: cluster
+    app.kubernetes.io/component: databases
+    app.kubernetes.io/part-of: keycloak
+    app.kubernetes.io/managed-by: kubernetes
+  annotations:
+    argocd.argoproj.io/sync-wave: "-2"
+spec:
+  postgresGID: 1000
+  instances: 3
+  primaryUpdateStrategy: unsupervised
+  enableSuperuserAccess: true
+  postgresql:
+    pg_hba:
+      - hostssl all all 10.244.0.0/16 trust
+      - hostnossl all all 10.244.0.0/16 trust
+  storage:
+    size: 16Gi
+    storageClass: 4546b

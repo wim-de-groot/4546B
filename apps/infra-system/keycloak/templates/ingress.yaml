@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: keycloak
+  namespace: infra-system
+  labels:
+    app.kubernetes.io/name: keycloak
+    app.kubernetes.io/instance: keycloak
+    app.kubernetes.io/component: identity
+    app.kubernetes.io/part-of: iam
+  annotations:
+    cert-manager.io/cluster-issuer: 4546b
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  rules:
+    - host: keycloak.united
+      http:
+        paths:
+          - backend:
+              service:
+                name: keycloak
+                port:
+                  name: http
+            path: /
+            pathType: Prefix
+  tls:
+    - secretName: keycloak-ingress-tls
+      hosts:
+        - keycloak.united

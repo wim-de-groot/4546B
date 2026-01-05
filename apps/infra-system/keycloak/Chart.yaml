@@ -1,0 +1,7 @@
+apiVersion: v2
+name: keycloak
+version: 26.4.7
+dependencies:
+  - name: keycloak-operator
+    version: 1.31.0
+    repository: https://epam.github.io/edp-helm-charts/stable

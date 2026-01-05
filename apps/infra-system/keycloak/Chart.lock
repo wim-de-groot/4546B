@@ -1,0 +1,6 @@
+dependencies:
+- name: keycloak-operator
+  repository: https://epam.github.io/edp-helm-charts/stable
+  version: 1.31.0
+digest: sha256:bc9d0154819d5a6c623a450259b90614851bf0fe09ae83dfcff12189a6652812
+generated: "2026-01-05T17:30:19.824361244+01:00"
