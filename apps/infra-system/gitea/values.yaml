@@ -45,7 +45,7 @@ gitea:
       - name: Keycloak
         provider: openidConnect
         existingSecret: gitea-oauth2-credentials
-        autoDiscoverUrl: https://keycloak.united/realms/4546b/.well-known/openid-configuration
+        autoDiscoverUrl: https://keycloak.united/realms/internal/.well-known/openid-configuration
 
   extraVolumes:
     - name: trustbundle
