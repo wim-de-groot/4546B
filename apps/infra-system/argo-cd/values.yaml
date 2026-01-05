@@ -36,9 +36,7 @@ argo-cd:
       
       policy.default: role:readonly
       
-      scopes: 
-        - groups
-        - email
+      scopes: '[groups, email]'
 
   server:
     ingress:
