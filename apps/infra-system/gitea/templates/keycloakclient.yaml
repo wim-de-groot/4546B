@@ -8,5 +8,5 @@ spec:
   secret: $gitea-oauth2-credentials:secret
   realmRef:
     kind: ClusterKeycloakRealm
-    name: 4546b
+    name: internal
   webUrl: https://gitea.united

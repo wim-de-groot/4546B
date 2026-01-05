@@ -1,0 +1,18 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: keycloak 
+  namespace: infra-system
+  labels:
+    app.kubernetes.io/name: keycloak
+    app.kubernetes.io/instance: database
+    app.kubernetes.io/component: identity
+    app.kubernetes.io/part-of: iam
+    app.kubernetes.io/managed-by: kubernetes
+  annotations:
+    argocd.argoproj.io/sync-wave: "-2"
+spec:
+  cluster:
+    name: keycloak 
+  name: keycloak
+  owner: app
