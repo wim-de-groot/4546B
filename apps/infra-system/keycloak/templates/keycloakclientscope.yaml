@@ -20,3 +20,4 @@ spec:
   realmRef:
     kind: ClusterKeycloakRealm
     name: internal
+  type: Default
