@@ -1,4 +1,3 @@
-keycloak:
-  keycloak-operator:
-    clusterReconciliationEnabled: true
-    name: keycloak-operator
+keycloak-operator:
+  clusterReconciliationEnabled: true
+  name: keycloak-operator
