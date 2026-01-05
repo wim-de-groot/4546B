@@ -4,6 +4,9 @@ metadata:
   name: argo-cd
   namespace: infra-system
 spec:
+  attributes:
+    valid.redirect.uris: https://argo-cd.united/auth/callback
+    post.logout.redirect.uris: https://argo-cd.united/applications
   clientId: argo-cd
   directAccess: true
   secret: $argocd-oauth2-credentials:oidc.keycloak.clientSecret
@@ -11,3 +14,5 @@ spec:
     kind: ClusterKeycloakRealm
     name: internal
   webUrl: https://argo-cd.united
+  webOrigins:
+    - "+"
