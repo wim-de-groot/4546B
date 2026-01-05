@@ -11,11 +11,6 @@ argo-cd:
       application.instanceLabelKey: app.kubernetes.io/instance
       application.resourceTrackingMethod: label
 
-    params:
-      server.insecure: true
-      
-      applicationsetcontroller.enable.new.git.file.globbing: true
-
       oidc.config: |
         name: Keycloak 
         issuer: https://keycloak.united/realms/internal
@@ -29,6 +24,11 @@ argo-cd:
           - profile
           - email
           - groups
+
+    params:
+      server.insecure: true
+      
+      applicationsetcontroller.enable.new.git.file.globbing: true
 
     rbac:
       policy.csv: |
