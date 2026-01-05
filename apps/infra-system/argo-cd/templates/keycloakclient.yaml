@@ -5,7 +5,6 @@ metadata:
   namespace: infra-system
 spec:
   attributes:
-    valid.redirect.uris: https://argo-cd.united/auth/callback
     post.logout.redirect.uris: https://argo-cd.united/applications
   clientId: argo-cd
   directAccess: true
