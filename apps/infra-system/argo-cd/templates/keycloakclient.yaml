@@ -1,0 +1,13 @@
+apiVersion: v1.edp.epam.com/v1
+kind: KeycloakClient
+metadata:
+  name: argo-cd
+  namespace: infra-system
+spec:
+  clientId: argo-cd
+  directAccess: true
+  secret: $argocd-oauth2-credentials:oidc.keycloak.clientSecret
+  realmRef:
+    kind: ClusterKeycloakRealm
+    name: internal
+  webUrl: https://argo-cd.united
