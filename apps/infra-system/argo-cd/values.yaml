@@ -16,18 +16,28 @@ argo-cd:
       
       applicationsetcontroller.enable.new.git.file.globbing: true
 
-      #  oidc.config: |
-      #    name: Keycloak 
-      #    issuer: https://login.microsoftonline.com/TENANT_ID/v2.0
-      #    clientID: $oidc.keycloak.clientId 
-      #    clientSecret: $oidc.keycloak.clientSecret
-      #    requestedIDTokenClaims:
-      #      groups:
-      #        essential: true
-      #    requestedScopes:
-      #      - openid
-      #      - profile
-      #      - email
+      oidc.config: |
+        name: Keycloak 
+        issuer: https://keycloak.united/realms/internal
+        clientID: argo-cd
+        clientSecret: $argocd-oauth2-credentials:oidc.keycloak.clientSecret
+        requestedIDTokenClaims:
+          groups:
+            essential: true
+        requestedScopes:
+          - openid
+          - profile
+          - email
+          - groups
+      
+      policy.csv: |
+        g, argocd-admins, role:admin
+      
+      policy.default: role:readonly
+      
+      scopes: 
+        - groups
+        - email
 
   server:
     ingress:
@@ -38,6 +48,93 @@ argo-cd:
         traefik.ingress.kubernetes.io/router.entrypoints: websecure
 
       tls: true
+
+    volumeMounts:
+      - mountPath: /etc/ssl/certs/trust-bundle.pem
+        name: trustbundle
+        subPath: trust-bundle.pem
+
+    volumes:
+      - name: trustbundle
+        configMap:
+          name: 4546b
+
+  controller:
+    volumeMounts:
+      - mountPath: /etc/ssl/certs/trust-bundle.pem
+        name: trustbundle
+        subPath: trust-bundle.pem
+
+    volumes:
+      - name: trustbundle
+        configMap:
+          name: 4546b
+
+  dex:
+    volumeMounts:
+      - mountPath: /etc/ssl/certs/trust-bundle.pem
+        name: trustbundle
+        subPath: trust-bundle.pem
+
+    volumes:
+      - name: trustbundle
+        configMap:
+          name: 4546b
+
+  redis:
+    volumeMounts:
+      - mountPath: /etc/ssl/certs/trust-bundle.pem
+        name: trustbundle
+        subPath: trust-bundle.pem
+
+    volumes:
+      - name: trustbundle
+        configMap:
+          name: 4546b
+
+  repoServer:
+    volumeMounts:
+      - mountPath: /etc/ssl/certs/trust-bundle.pem
+        name: trustbundle
+        subPath: trust-bundle.pem
+
+    volumes:
+      - name: trustbundle
+        configMap:
+          name: 4546b
+
+  applicationSet:
+    extraVolumeMounts:
+      - mountPath: /etc/ssl/certs/trust-bundle.pem
+        name: trustbundle
+        subPath: trust-bundle.pem
+
+    extraVolumes:
+      - name: trustbundle
+        configMap:
+          name: 4546b
+
+  notifications:
+    extraVolumeMounts:
+      - mountPath: /etc/ssl/certs/trust-bundle.pem
+        name: trustbundle
+        subPath: trust-bundle.pem
+
+    extraVolumes:
+      - name: trustbundle
+        configMap:
+          name: 4546b
+
+  commitServer:
+    extraVolumeMounts:
+      - mountPath: /etc/ssl/certs/trust-bundle.pem
+        name: trustbundle
+        subPath: trust-bundle.pem
+
+    extraVolumes:
+      - name: trustbundle
+        configMap:
+          name: 4546b
 
   extraObjects:
     - apiVersion: argoproj.io/v1alpha1

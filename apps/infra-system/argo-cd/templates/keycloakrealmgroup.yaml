@@ -1,0 +1,10 @@
+apiVersion: v1.edp.epam.com/v1
+kind: KeycloakRealmGroup
+metadata:
+  name: argocd-admins
+  namespace: infra-system
+spec:
+  name: argocd-admins
+  realmRef:
+    kind: ClusterKeycloakRealm
+    name: internal 
