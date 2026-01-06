@@ -1,4 +1,4 @@
-argo-cd:  
+argo-cd:
 
   global:
     domain: argo-cd.united
@@ -6,7 +6,7 @@ argo-cd:
   configs:
     cm: 
       create: true
-      url: https://argocd.united
+      url: https://argo-cd.united
 
       application.instanceLabelKey: app.kubernetes.io/instance
       application.resourceTrackingMethod: label
