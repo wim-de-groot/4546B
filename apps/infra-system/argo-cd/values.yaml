@@ -25,6 +25,17 @@ argo-cd:
           - email
           - groups
 
+      applicationsetcontroller.log.level: debug
+      applicationsetcontroller.log.format: json
+      controller.log.level: debug
+      controller.log.format: json
+      notificationscontroller.log.level: debug
+      notificationscontroller.log.format: json
+      reposerver.log.level: debug
+      reposerver.log.format: json
+      server.log.level: debug
+      server.log.format: json
+
     params:
       server.insecure: true
       
