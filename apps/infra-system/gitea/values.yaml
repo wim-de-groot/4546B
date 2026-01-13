@@ -19,7 +19,8 @@ gitea:
     storageClass: 4546b
 
   gitea:
-    existingSecret: gitea-intitial-admin-credentials
+    admin:
+      existingSecret: gitea-initial-admin-credentials
 
     additionalConfigFromEnvs:
       - name: GITEA__DATABASE__DB_TYPE
