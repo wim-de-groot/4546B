@@ -13,3 +13,14 @@ rook-ceph-cluster:
 
     logCollector:
       enabled: false
+
+  cephFileSystems:
+    - name: ceph-filesystem
+      spec:
+        metadataServer:
+          activeStandby: false
+          resources:
+            limits:
+              memory: 2Gi
+            requests:
+              memory: 1Gi
