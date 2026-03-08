@@ -1,2 +1,0 @@
-rook-ceph-cluster:
-  operatorNamespace: infra-system
