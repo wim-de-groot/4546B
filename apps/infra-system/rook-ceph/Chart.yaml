@@ -1,0 +1,11 @@
+apiVersion: v2
+name: rook-ceph
+version: &version v1.18.5
+dependencies:
+  - name: rook-ceph-cluster
+    version: *version 
+    repository: https://charts.rook.io/release
+  - name: rook-ceph
+    version: *version 
+    repository: https://charts.rook.io/release
+
