@@ -1,3 +1,2 @@
-rook-ceph:
-  rook-ceph-cluster:
-    operatorNamespace: infra-system
+rook-ceph-cluster:
+  operatorNamespace: infra-system
