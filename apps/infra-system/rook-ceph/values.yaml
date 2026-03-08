@@ -1,2 +1,15 @@
 rook-ceph-cluster:
   operatorNamespace: infra-system
+
+  cephClusterSpec:
+    mon:
+      count: 1
+
+    mgr:
+      count: 1
+
+    crashCollector:
+      disable: true
+
+    logCollector:
+      enabled: false
