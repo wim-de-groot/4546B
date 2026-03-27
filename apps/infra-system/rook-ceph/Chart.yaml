@@ -5,7 +5,9 @@ dependencies:
   - name: rook-ceph-cluster
     version: *version 
     repository: https://charts.rook.io/release
+    enabled: false
   - name: rook-ceph
     version: *version 
     repository: https://charts.rook.io/release
+    enabled: false
 
