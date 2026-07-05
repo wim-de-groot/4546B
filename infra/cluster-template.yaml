@@ -1,5 +1,6 @@
+---
 kind: Cluster
-name: 4546B 
+name: 4546B
 talos:
   version: v1.9.2
 kubernetes:
@@ -8,19 +9,24 @@ features:
   enableWorkloadProxy: false
 patches:
   - name: kubespan
-    file: infra/patches/kubespan.yaml
+    file: patches/kubespan.yaml
+  - name: data-engine
+    file: patches/data-engine.yaml
+systemExtensions:
+  - siderolabs/iscsi-tools
+  - siderolabs/util-linux-tools
 ---
 kind: ControlPlane
 machineClass:
   name: controlplane
-  size: 3 
+  size: 3
 patches:
   - name: scheduling
-    file: infra/patches/scheduling.yaml
+    file: patches/scheduling.yaml
   - name: argocd
-    file: infra/patches/argocd.yaml
+    file: patches/argocd.yaml
   - name: monitoring
-    file: infra/patches/monitoring.yaml
+    file: patches/monitoring.yaml
 ---
 kind: Workers
 name: workers
