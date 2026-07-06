@@ -18,4 +18,4 @@ spec:
       owner: gitea 
   storage:
     size: 16Gi
-    storageClass: 4546b
+    storageClass: longhorn

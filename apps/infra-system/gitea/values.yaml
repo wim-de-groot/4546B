@@ -16,7 +16,7 @@ gitea:
 
   persistance:
     enabled: true
-    storageClass: 4546b
+    storageClass: longhorn
 
   gitea:
     admin:
