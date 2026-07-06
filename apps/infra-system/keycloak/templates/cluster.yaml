@@ -22,4 +22,4 @@ spec:
       - hostnossl all all 10.244.0.0/16 trust
   storage:
     size: 16Gi
-    storageClass: 4546b
+    storageClass: longhorn
